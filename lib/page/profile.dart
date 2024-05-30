@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:netflex/config/const.dart';
 import 'package:netflex/page/flimwidget.dart';
 import 'package:netflex/data/film.dart';
-import 'package:netflex/page/menuhome.dart';
 import 'package:netflex/data/data.dart';
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -77,12 +76,6 @@ class _MyProfileState extends State<MyProfile> {
               ),
             ),
           ),
-          Positioned(
-              bottom: -20,
-              left: 40,
-              height: 100,
-              width: 300,
-              child: MenuHome())
         ],
       )
     );

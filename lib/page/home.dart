@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:netflex/config/const.dart';
+import 'package:netflex/page/profile.dart';
 import 'package:netflex/data/data.dart';
 import 'package:netflex/data/film.dart';
-import 'flimwidget.dart';
-import 'menuhome.dart';
+import 'package:netflex/page/defaultwidget.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -14,6 +14,34 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
+  int _selectedIndex = 0 ;
+  void _onItemTapped(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  _loadWidget (int index){
+    var nameWidget = "Home";
+    switch (index){
+      case 0:
+        return const DefautlWidget();
+      case 1:
+        nameWidget = "Contact";
+        break;
+      case 2:
+        {
+
+        }
+      case 3:
+        {
+          return const MyProfile();
+        }
+      default:
+        {
+          return const DefautlWidget();
+        }
+    }
+  }
   List<Film> lstposter = [];
   List<Film> lsttrending = [];
 
@@ -22,85 +50,30 @@ class _MyHomeState extends State<MyHome> {
     lstposter = getFlim(3);
     lsttrending = getFlim(3);
   }
-
-  @override
-  void setState(VoidCallback fn) {
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text('Welcome to NexFlex',style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.black,
-      ),
-      body: Center(
-        child:
-            Stack(
-              children: [
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children:<Widget> [
-                      Row(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/images/logo.jpg",
-                            width: 100,
-                          ),
-                          SizedBox(width: 25),
-                          Text(
-                            "TV Shows",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(width: 25),
-                          Text(
-                            "Movies",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(width: 25),
-                          Text(
-                            "My List",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(width: 10),
-                          IconButton(
-                            icon: Icon(Icons.search),
-                            color: Colors.white,
-                            onPressed: (){
-
-                            },
-                          ),
-                          Expanded(
-                            child: Container(),
-                          ),
-                        ],
-                      ),
-                      slideposter(lstposter),
-                      Row(
-                        children: [
-                          Text("Trending Movies",
-                            style: TextStyle(color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,),
-                          )
-                        ],
-                      ),
-                      slidetrending(lsttrending),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ]),
-                Positioned(
-                  bottom: 0,
-                    left: 40,
-                    height: 100,
-                    width: 300,
-                    child: MenuHome())
-              ],
-            ),
-
+      body: _loadWidget(_selectedIndex),
+      bottomNavigationBar:  BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.contact_mail),
+              label: 'Contact'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.supervised_user_circle),
+              label: 'Info'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile'),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
       ),
     );
   }
