@@ -11,10 +11,11 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF1f1545),
+      backgroundColor: Color.fromARGB(26, 26, 26, 100),
       appBar: AppBar(
-        backgroundColor: Color(0xFF1f1545),
+        backgroundColor: Color.fromARGB(26, 26, 26, 100),
         elevation: 0.0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -42,7 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 hintText: "The Dark Knight",
                 prefixIcon: Icon(Icons.search),
-                prefixIconColor: Colors.purple.shade900,
+                prefixIconColor: Colors.grey,
               ),
             ),
             SizedBox(

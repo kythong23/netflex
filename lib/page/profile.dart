@@ -22,7 +22,7 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color.fromARGB(26, 26, 26, 100),
       appBar: AppBar(
         title: Text("My profile", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
         backgroundColor: Colors.black,

@@ -4,6 +4,7 @@ import 'package:netflex/config/const.dart';
 import 'package:netflex/page/profile.dart';
 import 'package:netflex/data/data.dart';
 import 'package:netflex/data/film.dart';
+import 'package:netflex/page/search_screen.dart';
 import 'flimwidget.dart';
 
 class DefautlWidget extends StatefulWidget {
@@ -25,11 +26,7 @@ class _DefautlWidgetState extends State<DefautlWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text('Welcome to NexFlex',style: TextStyle(color: Colors.white),),
-        backgroundColor: Colors.black,
-      ),
+      backgroundColor: Color.fromARGB(26, 26, 26, 100),
       body:
       Center(
           child:
@@ -63,7 +60,10 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                         icon: Icon(Icons.search),
                         color: Colors.white,
                         onPressed: (){
-
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const SearchScreen()),
+                          );
                         },
                       ),
                       Expanded(

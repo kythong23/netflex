@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:netflex/config/const.dart';
+import 'package:netflex/page/newscreen.dart';
 import 'package:netflex/page/profile.dart';
 import 'package:netflex/data/data.dart';
 import 'package:netflex/data/film.dart';
@@ -26,13 +28,8 @@ class _MyHomeState extends State<MyHome> {
       case 0:
         return const DefautlWidget();
       case 1:
-        nameWidget = "Contact";
-        break;
+        return const NewScreen();
       case 2:
-        {
-
-        }
-      case 3:
         {
           return const MyProfile();
         }
@@ -56,23 +53,34 @@ class _MyHomeState extends State<MyHome> {
       backgroundColor: Colors.black,
       body: _loadWidget(_selectedIndex),
       bottomNavigationBar:  BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home'),
+            icon: _selectedIndex == 0
+                ? Icon(Icons.home, color: Colors.white)
+                : Icon(Icons.home_outlined, color: Color.fromARGB(
+                107, 107, 107, 100)),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.contact_mail),
-              label: 'Contact'),
+            icon: _selectedIndex == 1
+                ? Icon(Icons.supervised_user_circle, color: Colors.white)
+                : Icon(Icons.supervised_user_circle_outlined, color: Color.fromARGB(
+                107, 107, 107, 100)),
+            label: 'News',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle),
-              label: 'Info'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile'),
+            icon: _selectedIndex == 2
+                ? Icon(Icons.person, color: Colors.white)
+                : Icon(Icons.person_outline, color: Color.fromARGB(
+                107, 107, 107, 100)),
+            label: 'Profile',
+          ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Color.fromARGB(
+            107, 107, 107, 100),
+        backgroundColor: Colors.black,
         onTap: _onItemTapped,
       ),
     );
