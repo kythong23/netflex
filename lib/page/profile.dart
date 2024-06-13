@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netflex/config/const.dart';
 import 'package:netflex/page/flimwidget.dart';
-import 'package:netflex/data/film.dart';
+import 'package:netflex/data/movies.dart';
 import 'package:netflex/data/data.dart';
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -11,8 +11,8 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
-  List<Film> lstposter = [];
-  List<Film> lsttrending = [];
+  List<Movies> lstposter = [];
+  List<Movies> lsttrending = [];
 
   @override
   void initState() {

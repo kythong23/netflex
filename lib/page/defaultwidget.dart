@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:netflex/config/const.dart';
-import 'package:netflex/page/profile.dart';
 import 'package:netflex/data/data.dart';
-import 'package:netflex/data/film.dart';
+import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/search_screen.dart';
+import 'package:sqflite/sqflite.dart';
 import 'flimwidget.dart';
 
 class DefautlWidget extends StatefulWidget {
-  const DefautlWidget({super.key});
-
+  const DefautlWidget({super.key,required this.database});
+  final Database database;
   @override
   State<DefautlWidget> createState() => _DefautlWidgetState();
 }
 
 class _DefautlWidgetState extends State<DefautlWidget> {
-  List<Film> lstposter = [];
-  List<Film> lsttrending = [];
+  Future<List<Map<String,dynamic>>> lstposter = Future.value([]);
+  List<Movies> lsttrending = [];
 
   @override
   void initState() {
-    lstposter = getFlim(3);
+    lstposter = queryAllMovies(widget.database); // In dữ liệu ra console để kiểm tra
     lsttrending = getFlim(3);
   }
   @override

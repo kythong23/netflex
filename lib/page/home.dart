@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:netflex/config/const.dart';
-import 'package:netflex/page/newscreen.dart';
+import 'package:netflex/page/news.dart';
+import 'package:netflex/page/news.dart';
 import 'package:netflex/page/profile.dart';
 import 'package:netflex/data/data.dart';
-import 'package:netflex/data/film.dart';
+import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/defaultwidget.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqlite_api.dart';
 
 class MyHome extends StatefulWidget {
-  const MyHome({super.key});
-
+  final Database database;
+  const MyHome({super.key,required this.database});
   @override
   State<MyHome> createState() => _MyHomeState();
 }
-
 class _MyHomeState extends State<MyHome> {
   int _selectedIndex = 0 ;
   void _onItemTapped(int index){
@@ -23,24 +23,23 @@ class _MyHomeState extends State<MyHome> {
     });
   }
   _loadWidget (int index){
-    var nameWidget = "Home";
     switch (index){
       case 0:
-        return const DefautlWidget();
+        return DefautlWidget(database: widget.database);
       case 1:
-        return const NewScreen();
+        return const NewWidget();
       case 2:
         {
           return const MyProfile();
         }
       default:
         {
-          return const DefautlWidget();
+          return DefautlWidget(database: widget.database);
         }
     }
   }
-  List<Film> lstposter = [];
-  List<Film> lsttrending = [];
+  List<Movies> lstposter = [];
+  List<Movies> lsttrending = [];
 
   @override
   void initState() {

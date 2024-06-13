@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 import 'comingsoon_widget.dart';
 
-class NewScreen extends StatefulWidget {
-  const NewScreen ({super.key});
+class NewWidget extends StatefulWidget {
+  const NewWidget ({super.key});
 
   @override
-  State<NewScreen> createState() => _NewScreenState();
+  State<NewWidget> createState() => _NewWidgetState();
 }
 
-class _NewScreenState extends State<NewScreen>{
+class _NewWidgetState extends State<NewWidget>{
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

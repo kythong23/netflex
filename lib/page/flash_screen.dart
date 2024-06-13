@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 import 'package:netflex/page/home.dart';
+import 'package:sqflite/sqflite.dart';
+
+import '../data/data.dart';
 
 
 class FlashScreen extends StatefulWidget {
@@ -9,17 +13,35 @@ class FlashScreen extends StatefulWidget {
   @override
   State<FlashScreen> createState() => _FlashScreenState();
 }
-
+class SetupdataWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Database>(
+      future: initializeDatabase(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Trạng thái đang chờ, có thể hiển thị một widget tạm thời
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // Đã xảy ra lỗi
+          return Text('Error: ${snapshot.error}');
+        } else {
+          // Kết quả đã sẵn sàng, có thể sử dụng cơ sở dữ liệu ở đây
+          Database database = snapshot.data!;
+          return MyHome(database: database);
+        }
+      },
+    );
+  }
+}
 class _FlashScreenState extends State<FlashScreen>
     with SingleTickerProviderStateMixin {
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
     Future.delayed(Duration(seconds:2),() {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_)=> const MyHome(),
+        MaterialPageRoute(builder: (_)=> SetupdataWidget(),
         ),
       );
     });
@@ -39,12 +61,7 @@ class _FlashScreenState extends State<FlashScreen>
         child: Center(
           child: Stack(
             children: [
-              Image.asset(
-                'assets/images/logo.jpg',
-                fit: BoxFit.cover,
-                color: Colors.black.withOpacity(0.3), // Apply a color filter directly
-                colorBlendMode: BlendMode.darken, // Blend mode to merge with the background
-              ),
+              Lottie.asset('assets/netflex.json'),
             ],
           ),
 

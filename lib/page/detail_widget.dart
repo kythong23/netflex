@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:netflex/page/moviebutton_page.dart';
+import 'package:netflex/data/movies.dart';
+import 'package:netflex/page/watching_widget.dart';
+class DetailWidget extends StatefulWidget {
+  final Movies movies;
+  const DetailWidget({super.key,required this.movies});
 
-class DetailWidget extends StatelessWidget{
+  @override
+  State<DetailWidget> createState() => _DetailWidgetState();
+}
+
+class _DetailWidgetState extends State<DetailWidget> {
   @override
   Widget build(BuildContext context) {
+    Movies movies = widget.movies;
     return Scaffold(
       backgroundColor: Color.fromARGB(26, 26, 26, 100),
       body: Stack(
@@ -11,7 +21,7 @@ class DetailWidget extends StatelessWidget{
           Opacity(
             opacity: 0.4,
             child: Image.asset(
-              "assets/images/poster1.jpg",
+              "assets/images/"+movies.img!,
               height: 400,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -55,7 +65,7 @@ class DetailWidget extends StatelessWidget{
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.red.withOpacity(0.5),
@@ -67,7 +77,7 @@ class DetailWidget extends StatelessWidget{
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.asset(
-                                "assets/images/poster1.jpg",
+                                "assets/images/"+movies.img!,
                                 height: 250,
                                 width: 100,
                               ),
@@ -88,10 +98,17 @@ class DetailWidget extends StatelessWidget{
                                 ),
                               ],
                             ),
-                            child: Icon(
-                              Icons.play_arrow,
-                              color: Colors.white,
-                              size: 60,
+                            child:
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute
+                                  (builder: (context)=>WatchingWidget()));
+                              },
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.white,
+                                size: 60,
+                              ),
                             ),
                           ),
                         ],
@@ -100,7 +117,7 @@ class DetailWidget extends StatelessWidget{
                     SizedBox(height: 30),
                     MovieButtonPage(),
                     Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+                      padding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -114,7 +131,7 @@ class DetailWidget extends StatelessWidget{
                           ),
                           SizedBox(height:15),
                           Text(
-                            "This is the sample description of the movie, you can write anything about the movie aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            movies.description?? "No description",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -156,8 +173,8 @@ class DetailWidget extends StatelessWidget{
                                   width: 150,
                                   fit: BoxFit.cover,
                                 ),
-                            ),
-                          )
+                              ),
+                            )
                         ],
                       ),
                     )
@@ -169,5 +186,4 @@ class DetailWidget extends StatelessWidget{
       ),
     );
   }
-  
 }
