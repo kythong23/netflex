@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:netflex/config/api_service.dart';
 import 'package:netflex/config/const.dart';
 import 'package:netflex/data/data.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/detail_widget.dart';
 
 Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
-  return FutureBuilder<List<Map<String,dynamic>>>(
-    future: listPoster,
+  return FutureBuilder<List<Movies>>(
+    future: fetchMovies(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return CircularProgressIndicator(); // Hiển thị tiến trình chờ
@@ -15,7 +16,7 @@ Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
         return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
       } else {
         // Xử lý kết quả từ Future và hiển thị CarouselSlider
-        List<Map<String,dynamic>> listPoster = snapshot.data!;
+        List<Movies> listPoster = snapshot.data!;
         return CarouselSlider(
           options: CarouselOptions(
             autoPlay: true,
@@ -27,10 +28,10 @@ Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
               .map((e) => GestureDetector(
             onTap: (){
               Movies movies = Movies(
-                id: e['id'],
-                name: e['title'],
-                img: e['img'],
-                description: e['description'],
+                id: e.id,
+                title: e.title,
+                img: e.img,
+                description: e.description,
               );
               Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWidget(movies: movies)));
             },
@@ -39,7 +40,7 @@ Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Image.asset(
-                  "assets/images/"+e['img'],
+                  "assets/images/"+e.img!,
                   fit: BoxFit.cover,
                 ),
               ),

@@ -12,7 +12,7 @@ getFlim(int amount){
   List<Movies> film = [];
   for(int i = 1 ; i<=amount; i++){
       film.add(Movies(
-        name: "phim"+"$i",
+        title: "phim"+"$i",
         img: url_img+"poster"+"$i"+".jpg"
         )
       );
