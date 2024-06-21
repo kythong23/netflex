@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflex/page/detail_widget.dart';
+import 'package:netflex/page/signupwidget.dart';
 import 'page/home.dart';
 import 'page/profile.dart';
 import 'page/search_screen.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: FlashScreen(),
+      home: LoginScreen(),
     );
   }
 }
