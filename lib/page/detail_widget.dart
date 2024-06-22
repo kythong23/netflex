@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:netflex/config/api_service.dart';
+import 'package:netflex/data/episode.dart';
 import 'package:netflex/page/moviebutton_page.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/watching_widget.dart';
@@ -20,8 +22,8 @@ class _DetailWidgetState extends State<DetailWidget> {
         children: [
           Opacity(
             opacity: 0.4,
-            child: Image.asset(
-              "assets/images/"+movies.img!,
+            child: Image.network(
+              movies.img!,
               height: 400,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -66,20 +68,14 @@ class _DetailWidgetState extends State<DetailWidget> {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.red.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 8,
-                                ),
-                              ],
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: Image.asset(
-                                "assets/images/"+movies.img!,
-                                height: 250,
-                                width: 100,
+                              child: Image.network(
+                                movies.img!,
+                                height: 125,
+                                width: 150,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -121,8 +117,30 @@ class _DetailWidgetState extends State<DetailWidget> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          FutureBuilder(
+                              future: fetchEpisode(),
+                              builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                              return CircularProgressIndicator(); // Hiển thị tiến trình chờ
+                              } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
+                              } else {
+                                  List<Episode> listepisode = snapshot.data!;
+                              return Container(
+                                child:
+                                    Text(
+                                    listepisode[0].name!,
+                                    style: TextStyle(
+                                    color: Colors.white,
+                                      fontSize: 16,
+                                    )
+                              )
+                              );
+                              }
+                                }
+                          ),
                           Text(
-                            "You",
+                            movies.title!,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 35,

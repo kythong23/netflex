@@ -1,9 +1,8 @@
 import 'dart:convert';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_player/video_player.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:chewie/chewie.dart';
 
 class WatchingWidget extends StatefulWidget {
@@ -15,19 +14,16 @@ class WatchingWidget extends StatefulWidget {
 
 class _WatchingWidgetState extends State<WatchingWidget> {
   late Future<String?> _fetchVideoUrl;
-  late YoutubePlayerController _youtubePlayerController;
+  late VideoPlayerController _videoPlayerController;
+  late ChewieController _chewieController;
 
   @override
   void initState() {
     super.initState();
+    // Đặt hướng màn hình ngang
+
+
     _fetchVideoUrl = _getVideoUrl();
-    _youtubePlayerController = YoutubePlayerController(
-      initialVideoId: '',
-      flags: YoutubePlayerFlags(
-        autoPlay: true,
-        mute: false,
-      ),
-    );
   }
 
   Future<String?> _getVideoUrl() async {
@@ -37,7 +33,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> results = data['results'];
       if (results.isNotEmpty) {
-        return results[0]['key'];
+        return "https://vip.opstream17.com/20240418/5285_d02f1264/index.m3u8";
         // Assuming the first result is a YouTube video, you can modify this according to your API response
       }
     }
@@ -68,10 +64,15 @@ class _WatchingWidgetState extends State<WatchingWidget> {
             } else {
               final String? videoKey = snapshot.data;
               if (videoKey != null) {
-                _youtubePlayerController.load(videoKey);
-                return YoutubePlayer(
-                  controller: _youtubePlayerController,
-                  showVideoProgressIndicator: true,
+                _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(videoKey));
+                _chewieController = ChewieController(
+                  videoPlayerController: _videoPlayerController,
+                  autoPlay: true,
+                  looping: false,
+                  fullScreenByDefault: true,
+                );
+                return Chewie(
+                  controller: _chewieController,
                 );
               } else {
                 return Center(
@@ -87,7 +88,8 @@ class _WatchingWidgetState extends State<WatchingWidget> {
 
   @override
   void dispose() {
-    _youtubePlayerController.dispose();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 }

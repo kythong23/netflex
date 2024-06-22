@@ -39,8 +39,8 @@ Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
               margin: const EdgeInsets.all(5.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image.asset(
-                  "assets/images/"+e.img!,
+                child: Image.network(
+                  e.img!,
                   fit: BoxFit.cover,
                 ),
               ),
