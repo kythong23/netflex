@@ -1,0 +1,25 @@
+--- insert for film
+{
+  "id": 1,
+  "title": "The one who got away you",
+  "description": "Tôi đã sẵn sàng nói lời tạm biệt với loạt phim kinh dị bí ẩn đình đám của Netflix, You. Tôi cứ tưởng mùa hiện tại sẽ kết thúc hành trình nguy hiểm đi tìm tình yêu đích thực của Joe Goldberg (Penn Badgley). Sau 5 năm tin rằng mình có ý định tốt và 8 mối tình khác nhau, kẻ sát nhân mê sách vẫn đang rình rập. Tuy nhiên, sau phần cuối của mùa giải, người hâm mộ đã chứng kiến ​​Joe cuối cùng cũng chấp nhận con người thật của mình và chấp nhận nó: một kẻ sát nhân sát nhân.Phần 4 được chia thành hai phần. Phần Một khởi chiếu vào ngày 9 tháng 2 và Phần Hai khởi chiếu vào ngày 9 tháng 3. Sau khi trốn khỏi Mỹ, Joe Goldberg trở thành Jonathon Moore. Tôi rất hào hứng khi biết mùa giải mới này sẽ diễn ra ở châu Âu, nhưng cuối cùng lại thấy khá nhàm chán và khó khăn khi bước vào nửa đầu mùa giải. Nhưng với quá nhiều nhân vật mới, tôi phải chật vật lắm mới theo kịp được mọi người. Mùa giải bắt đầu khơi dậy sự quan tâm của tôi đối với Phần thứ hai. Tại đây, người hâm mộ khám phá ra Joe thực sự bị bệnh như thế nào. Anh ta không chỉ gây ảo giác cho tác giả và ứng cử viên thị trưởng, Rhys Montrose (Ed Speleers), người mà chúng tôi nghĩ là nhân vật phản diện và “Eat the Rich Killer” trong suốt mùa giải, mà chúng tôi còn phát hiện ra rằng kẻ giết người chính là Joe. Anh ta đang gây ảo giác cho Rhys do bị ám ảnh bởi địa vị nổi tiếng của Rhys. Joe đã biến đổi những đặc điểm nguy hiểm của bản thân thành một phiên bản giả của Rhys. Điều này được thực hiện như một cách để Joe phủ nhận bản chất xấu xa thực sự của mình.Sau khi Joe trở về thực tại, anh nhận ra mình chính là kẻ giết người hàng loạt mà mọi người đang tìm kiếm. Không chỉ vậy, anh còn nhận ra rằng hành động ích kỷ của mình đã ngăn cản người phụ nữ anh yêu, Marienne Bellamy (Tati Gabrielle), giành quyền nuôi con gái mình. Đây là nơi Joe đạt đến điểm đột phá của mình. Anh ta định tự tử bằng cách dìm mình xuống sông nhưng được kéo đến nơi an toàn. Mặc dù thật khó khăn khi chứng kiến ​​một ai đó, thậm chí là một nhân vật hư cấu, đạt đến điểm đó trong tâm trí họ, nhưng tôi vẫn mong đợi nhiều điều hơn thế. Tôi hy vọng Joe Goldberg sẽ phải vào tù hoặc vào trại tâm thần. Thay vào đó, anh lại một lần nữa bỏ qua mọi chuyện và không hề quan tâm đến trạng thái tinh thần đang sa sút của mình.Bây giờ chúng ta biết rằng Joe thực sự bị điên, điều gì sẽ xảy ra với loạt phim này? Marienne đã cố gắng giả vờ tự sát ở cuối Phần 2, để cô có thể tự do sống cuộc sống của mình ở Paris với con gái mình: Mối tình đầu tiên của Joe khiến nó còn sống. Bạn gái của Joe, Kate Galvin (Charlotte Ritchie), không hiểu sao lại không quan tâm đến việc bạn trai mình từng giết người trong quá khứ và muốn tiếp tục trở thành một cặp đôi quyền lực. Nhờ sự giàu có và mối quan hệ của gia đình cô, Joe đã có thể từ bỏ Jonathon Moore, chuyển đến New York và xóa sạch quá khứ của mình. Làm thế nào điều đó xảy ra, chúng tôi không biết. Tất cả những gì chúng ta biết là Joe một lần nữa thoát khỏi tội giết người và hài lòng với việc trở thành kẻ xấu.Trong Phần 5, sẽ không có gì vượt quá giới hạn về việc anh ấy sẵn sàng đi bao xa.",
+  "img": "poster1.jpg",
+  "duration": 0,
+  "dateRelease": "2024-06-19T14:41:54.697Z",
+  "likes": 0,
+  "episode": 0,
+  "views": 0,
+  "ageLimit": 0,
+  "countryId": 0,
+  "creatorId": 0,
+  "subtitleId": 0,
+  "status": "string"
+}
+
+--insert for episode
+{
+  "episodeId": 1,
+  "name": "Tập 2",
+  "link": "https://vip.opstream17.com/20240406/3932_2cd4e725/index.m3u8",
+  "movieId": 0
+}

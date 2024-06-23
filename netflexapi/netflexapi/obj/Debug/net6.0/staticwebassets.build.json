@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ISIYoSpjo3eIqI/URYFe4aoc6VcuC2ZqvNQa2x9aqVA=",
+  "Source": "netflexapi",
+  "BasePath": "_content/netflexapi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
