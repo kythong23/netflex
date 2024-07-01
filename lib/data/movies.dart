@@ -13,6 +13,7 @@ class Movies {
   int? creatorId;
   int? subtitleId;
   String? status;
+  String? trailer;
 
   Movies(
       {this.id,
@@ -28,7 +29,8 @@ class Movies {
         this.countryId,
         this.creatorId,
         this.subtitleId,
-        this.status});
+        this.status,
+        this.trailer});
 
   Movies.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -45,6 +47,7 @@ class Movies {
     creatorId = json['creatorId'];
     subtitleId = json['subtitleId'];
     status = json['status'];
+    trailer = json['trailer'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +66,7 @@ class Movies {
     data['creatorId'] = this.creatorId;
     data['subtitleId'] = this.subtitleId;
     data['status'] = this.status;
+    data['trailer'] = this.trailer;
     return data;
   }
 }

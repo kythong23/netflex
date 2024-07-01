@@ -4,6 +4,7 @@ import 'package:netflex/data/episode.dart';
 import 'package:netflex/page/moviebutton_page.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/watching_widget.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class DetailWidget extends StatefulWidget {
   final Movies movies;
   const DetailWidget({super.key,required this.movies});
@@ -13,13 +14,14 @@ class DetailWidget extends StatefulWidget {
 }
 
 class _DetailWidgetState extends State<DetailWidget> {
+  late YoutubePlayerController _controller;
   @override
   Widget build(BuildContext context) {
     Movies movies = widget.movies;
     return Scaffold(
       backgroundColor: Color.fromARGB(26, 26, 26, 100),
       body: Stack(
-        children: [
+        children:[
           Opacity(
             opacity: 0.4,
             child: Image.network(
@@ -59,55 +61,68 @@ class _DetailWidgetState extends State<DetailWidget> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 60),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                movies.img!,
-                                height: 125,
-                                width: 150,
-                                fit: BoxFit.cover,
+                    Container(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 16 / 9, // Tỷ lệ khung hình 16:9
+                              child: Container(
+                                color: Colors.black,
+                                child:widget.movies!.trailer! !=" " ? Container():Container(),
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(right: 50,top: 70),
-                            height: 80,
-                            width: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40),
-                              color: Colors.red,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.red.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 8,
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                      movies.img!,
+                                      height: 125,
+                                      width: 150,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(right: 50,top: 70),
+                                  height: 80,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(40),
+                                    color: Colors.red,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.red.withOpacity(0.5),
+                                        spreadRadius: 2,
+                                        blurRadius: 8,
+                                      ),
+                                    ],
+                                  ),
+                                  child:
+                                  InkWell(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute
+                                        (builder: (context)=>WatchingWidget(link: " ",)));
+                                    },
+                                    child: Icon(
+                                      Icons.play_arrow,
+                                      color: Colors.white,
+                                      size: 60,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
-                            child:
-                            InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute
-                                  (builder: (context)=>WatchingWidget()));
-                              },
-                              child: Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                                size: 60,
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 30),
@@ -117,28 +132,6 @@ class _DetailWidgetState extends State<DetailWidget> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          FutureBuilder(
-                              future: fetchEpisode(),
-                              builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                              return CircularProgressIndicator(); // Hiển thị tiến trình chờ
-                              } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
-                              } else {
-                                  List<Episode> listepisode = snapshot.data!;
-                              return Container(
-                                child:
-                                    Text(
-                                    listepisode[0].name!,
-                                    style: TextStyle(
-                                    color: Colors.white,
-                                      fontSize: 16,
-                                    )
-                              )
-                              );
-                              }
-                                }
-                          ),
                           Text(
                             movies.title!,
                             style: TextStyle(
@@ -155,6 +148,25 @@ class _DetailWidgetState extends State<DetailWidget> {
                               fontSize: 16,
                             ),
                             textAlign: TextAlign.justify,
+                          ),
+                          SizedBox(height:15),
+                          FutureBuilder(
+                              future: fetchEpisodesByMovieId(widget.movies!.id!),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return CircularProgressIndicator(); // Hiển thị tiến trình chờ
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
+                                } else {
+                                  List<Episode> listepisode = snapshot.data!;
+                                  return Column(
+                                    children: [
+                                      for (var episode in listepisode)
+                                        listEpisode(episode),
+                                    ],
+                                  );
+                                }
+                              }
                           ),
                         ],
                       ),
@@ -200,8 +212,47 @@ class _DetailWidgetState extends State<DetailWidget> {
                 )
             ),
           )
-        ],
+      ,]
+    ));
+  }
+  Widget listEpisode (Episode episode){
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
       ),
+      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.only(bottom: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute
+              (builder: (context)=>WatchingWidget(link: episode.link!,)));
+          },
+              child: Text(
+                episode.name!,
+                style:
+                TextStyle(
+                  color: Colors.black,
+                ),
+              ),)
+      ],),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.movies.trailer != null ){
+      final videoid = YoutubePlayer.convertUrlToId(widget.movies.trailer!);
+      _controller = YoutubePlayerController(initialVideoId: videoid!,
+        flags: const YoutubePlayerFlags(
+          autoPlay: true,
+        ),
+      );
+    }
+    else
+      widget.movies.trailer = " ";
   }
 }

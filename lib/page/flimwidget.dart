@@ -27,12 +27,7 @@ Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
           items: listPoster
               .map((e) => GestureDetector(
             onTap: (){
-              Movies movies = Movies(
-                id: e.id,
-                title: e.title,
-                img: e.img,
-                description: e.description,
-              );
+              Movies movies = e;
               Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWidget(movies: movies)));
             },
             child:Container(

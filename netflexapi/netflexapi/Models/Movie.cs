@@ -26,6 +26,7 @@ namespace netflexapi.Models
         public int? CreatorId { get; set; }
         public int? SubtitleId { get; set; }
         public string? Status { get; set; }
+        public string? Trailer { get; set; }
 
         public virtual Country? Country { get; set; }
         public virtual Creator? Creator { get; set; }

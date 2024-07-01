@@ -182,6 +182,8 @@ namespace netflexapi.Models
                     .HasMaxLength(50)
                     .HasColumnName("title");
 
+                entity.Property(e => e.Trailer).HasColumnName("trailer");
+
                 entity.Property(e => e.Views).HasColumnName("views");
 
                 entity.HasOne(d => d.Country)

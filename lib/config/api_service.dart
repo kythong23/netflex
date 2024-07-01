@@ -23,3 +23,8 @@ Future<List<Episode>> fetchEpisode() async {
     throw Exception('Failed to load Episode');
   }
 }
+Future<List<Episode>> fetchEpisodesByMovieId(int id) async {
+  List<Episode> allEpisodes = await fetchEpisode();
+  List<Episode> filteredEpisodes = allEpisodes.where((episode) => episode.movieId == id).toList();
+  return filteredEpisodes;
+}
