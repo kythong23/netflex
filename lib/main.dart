@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflex/page/detail_widget.dart';
-import 'package:netflex/page/signupwidget.dart';
-import 'page/home.dart';
-import 'page/profile.dart';
-import 'page/search_screen.dart';
+import 'package:netflex/page/search_screen.dart';
 import 'page/flash_screen.dart';
 void main() {
   runApp(const MyApp());
@@ -36,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: FlashScreen(),
+      home: const FlashScreen(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflex/config/api_service.dart';
 import 'package:netflex/data/data.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/search_screen.dart';
@@ -13,18 +14,23 @@ class DefautlWidget extends StatefulWidget {
 }
 
 class _DefautlWidgetState extends State<DefautlWidget> {
-  Future<List<Map<String,dynamic>>> lstposter = Future.value([]);
+  List<Movies> getfilm = [];
   List<Movies> lsttrending = [];
 
   @override
   void initState() {
-    lstposter = queryAllMovies(widget.database); // In dữ liệu ra console để kiểm tra
     lsttrending = getFlim(3);
+    Future<List<Movies>> getallflim()async{
+      Future<List<Movies>> futureMovies = fetchMovies();
+      getfilm = await futureMovies;
+      return getfilm;
+    }
+    getallflim();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(26, 26, 26, 100),
+      backgroundColor: const Color.fromARGB(26, 26, 26, 100),
       body:
       Center(
           child:
@@ -38,29 +44,29 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                         "assets/images/logo.jpg",
                         width: 100,
                       ),
-                      SizedBox(width: 25),
-                      Text(
+                      const SizedBox(width: 25),
+                      const Text(
                         "TV Shows",
                         style: TextStyle(color: Colors.white),
                       ),
-                      SizedBox(width: 25),
-                      Text(
+                      const SizedBox(width: 25),
+                      const Text(
                         "Movies",
                         style: TextStyle(color: Colors.white),
                       ),
-                      SizedBox(width: 25),
-                      Text(
+                      const SizedBox(width: 25),
+                      const Text(
                         "My List",
                         style: TextStyle(color: Colors.white),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       IconButton(
-                        icon: Icon(Icons.search),
+                        icon: const Icon(Icons.search),
                         color: Colors.white,
                         onPressed: (){
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const SearchScreen()),
+                              MaterialPageRoute(builder: (context) => SearchScreen(allfilm: getfilm,)),
                           );
                         },
                       ),
@@ -69,8 +75,8 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                       ),
                     ],
                   ),
-                  slideposter(lstposter),
-                  Row(
+                  slideposter(context),
+                  const Row(
                     children: [
                       Text("Trending Movies",
                         style: TextStyle(color: Colors.white,
@@ -79,7 +85,7 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                       )
                     ],
                   ),
-                  slidetrending(lsttrending),
+                  slidetrending(lsttrending,context),
                 ]),
           )
       ),

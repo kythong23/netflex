@@ -22,17 +22,17 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(26, 26, 26, 100),
+      backgroundColor: const Color.fromARGB(26, 26, 26, 100),
       appBar: AppBar(
-        title: Text("My profile", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
+        title: const Text("My profile", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
         backgroundColor: Colors.black,
         actions: [
           IconButton(onPressed: (){
 
-          }, icon: Icon(Icons.menu),color: Colors.white,),
+          }, icon: const Icon(Icons.menu),color: Colors.white,),
           IconButton(onPressed: (){
 
-          }, icon: Icon(Icons.search),color: Colors.white,)
+          }, icon: const Icon(Icons.search),color: Colors.white,)
         ],
       ),
       body: Stack(
@@ -44,12 +44,12 @@ class _MyProfileState extends State<MyProfile> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: // Đặt độ cong của viền
-                    Image.asset(url_img+"profileicon.jpg", height: 100,),
+                    Image.asset("${url_img}profileicon.jpg", height: 100,),
                   ),
-                  Text("MyName",
+                  const Text("MyName",
                     style: TextStyle(color: Colors.white),),
-                  SizedBox(height: 10,),
-                  Row(
+                  const SizedBox(height: 10,),
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.note_alt,color: Colors.white,),
@@ -57,21 +57,21 @@ class _MyProfileState extends State<MyProfile> {
                           style: TextStyle(color: Colors.white))
                     ],
                   ),
-                  SizedBox(height: 25,),
-                  Row(
+                  const SizedBox(height: 25,),
+                  const Row(
                     children: [
                       Text("Trailers You've Watched",
                           style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  slidetrending(lsttrending),
-                  Row(
+                  slidetrending(lsttrending,context),
+                  const Row(
                     children: [
                       Text("Continue Watching",
                           style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  slidetrending(lsttrending),
+                  slidetrending(lsttrending,context),
                 ],
               ),
             ),

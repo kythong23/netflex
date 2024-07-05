@@ -26,7 +26,7 @@ class ComingSoonWidget extends StatelessWidget{
         children: [
           Column(
             children: [
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Text(
                 month,
                 style: const TextStyle(

@@ -14,11 +14,11 @@ class Episode {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['episodeId'] = this.episodeId;
-    data['name'] = this.name;
-    data['link'] = this.link;
-    data['movieId'] = this.movieId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['episodeId'] = episodeId;
+    data['name'] = name;
+    data['link'] = link;
+    data['movieId'] = movieId;
     return data;
   }
 }

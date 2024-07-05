@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
 
-  const  LoginScreen({Key? key}) : super(key: key);
+  const  LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 0.1,
             color: Colors.black,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextField(

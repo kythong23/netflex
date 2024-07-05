@@ -1,19 +1,16 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:netflex/config/const.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'movies.dart';
-import 'dart:ui';
 
 getFlim(int amount){
   List<Movies> film = [];
   for(int i = 1 ; i<=amount; i++){
       film.add(Movies(
-        title: "phim"+"$i",
-        img: url_img+"poster"+"$i"+".jpg"
+        title: "phim""$i",
+        img: "${url_img}poster$i.jpg"
         )
       );
   }

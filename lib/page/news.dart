@@ -1,6 +1,4 @@
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'comingsoon_widget.dart';
@@ -27,7 +25,7 @@ class _NewWidgetState extends State<NewWidget>{
               ),
               ),
               bottom: TabBar(
-                indicatorPadding: EdgeInsets.fromLTRB(-10, 0, -10, 0),
+                indicatorPadding: const EdgeInsets.fromLTRB(-10, 0, -10, 0),
                 dividerColor: Colors.black,
                 isScrollable: false,
                 indicator: BoxDecoration(
@@ -40,7 +38,7 @@ class _NewWidgetState extends State<NewWidget>{
                   fontSize: 14,
                 ),
                 unselectedLabelColor: Colors.white,
-                tabs: [
+                tabs: const [
                 Tab(
                   text: " 🍿 Coming Soon",
                 ),
@@ -50,7 +48,7 @@ class _NewWidgetState extends State<NewWidget>{
               ],
               ),
             ),
-            backgroundColor: Color.fromARGB(26, 26, 26, 100),
+            backgroundColor: const Color.fromARGB(26, 26, 26, 100),
             body: const TabBarView(
               children: [
                 SingleChildScrollView(

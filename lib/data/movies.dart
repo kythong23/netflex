@@ -51,22 +51,22 @@ class Movies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['img'] = this.img;
-    data['duration'] = this.duration;
-    data['dateRelease'] = this.dateRelease;
-    data['likes'] = this.likes;
-    data['episode'] = this.episode;
-    data['views'] = this.views;
-    data['ageLimit'] = this.ageLimit;
-    data['countryId'] = this.countryId;
-    data['creatorId'] = this.creatorId;
-    data['subtitleId'] = this.subtitleId;
-    data['status'] = this.status;
-    data['trailer'] = this.trailer;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['description'] = description;
+    data['img'] = img;
+    data['duration'] = duration;
+    data['dateRelease'] = dateRelease;
+    data['likes'] = likes;
+    data['episode'] = episode;
+    data['views'] = views;
+    data['ageLimit'] = ageLimit;
+    data['countryId'] = countryId;
+    data['creatorId'] = creatorId;
+    data['subtitleId'] = subtitleId;
+    data['status'] = status;
+    data['trailer'] = trailer;
     return data;
   }
 }

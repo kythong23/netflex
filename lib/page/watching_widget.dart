@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
@@ -26,7 +23,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Watching"),
+        title: const Text("Watching"),
       ),
       body: Container(
         height: 350,
@@ -47,7 +44,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
             ),
           ),
         )
-              : Center(
+              : const Center(
           child: CircularProgressIndicator(),
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:netflex/data/episode.dart';
 import 'package:netflex/page/moviebutton_page.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/watching_widget.dart';
+import 'package:readmore/readmore.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class DetailWidget extends StatefulWidget {
   final Movies movies;
@@ -19,7 +20,7 @@ class _DetailWidgetState extends State<DetailWidget> {
   Widget build(BuildContext context) {
     Movies movies = widget.movies;
     return Scaffold(
-      backgroundColor: Color.fromARGB(26, 26, 26, 100),
+      backgroundColor: Colors.black,
       body: Stack(
         children:[
           Opacity(
@@ -36,7 +37,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -44,7 +45,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.arrow_back,
                               color: Colors.white,
                               size: 30,
@@ -52,7 +53,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                           ),
                           InkWell(
                             onTap: (){},
-                            child: Icon(
+                            child: const Icon(
                               Icons.favorite_border,
                               color: Colors.white,
                               size: 35,
@@ -63,17 +64,19 @@ class _DetailWidgetState extends State<DetailWidget> {
                     ),
                     Container(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
                           children: [
                             AspectRatio(
                               aspectRatio: 16 / 9, // Tỷ lệ khung hình 16:9
                               child: Container(
                                 color: Colors.black,
-                                child:widget.movies!.trailer! !=" " ? Container():Container(),
+                                child:(widget.movies.trailer! !=" ")
+                                    ?YoutubePlayer(controller: _controller)
+                                    :Container(),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -92,7 +95,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(right: 50,top: 70),
+                                  margin: const EdgeInsets.only(right: 50,top: 70),
                                   height: 80,
                                   width: 80,
                                   decoration: BoxDecoration(
@@ -110,9 +113,9 @@ class _DetailWidgetState extends State<DetailWidget> {
                                   InkWell(
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute
-                                        (builder: (context)=>WatchingWidget(link: " ",)));
+                                        (builder: (context)=>const WatchingWidget(link: " ",)));
                                     },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.play_arrow,
                                       color: Colors.white,
                                       size: 60,
@@ -125,36 +128,41 @@ class _DetailWidgetState extends State<DetailWidget> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30),
-                    MovieButtonPage(),
+                    const SizedBox(height: 30),
+                    const MovieButtonPage(),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             movies.title!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 35,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          SizedBox(height:15),
-                          Text(
-                            movies.description?? "No description",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            textAlign: TextAlign.justify,
+                          const SizedBox(height:15),
+                          ReadMoreText(
+                              movies.description?? "No description",
+                            style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                            trimMode: TrimMode.Line,
+                            trimLines: 2,
+                            colorClickableText: Colors.pink,
+                            trimCollapsedText: 'Show more',
+                            trimExpandedText: 'Show less',
+                            moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.white,),
                           ),
-                          SizedBox(height:15),
+                          const SizedBox(height:15),
                           FutureBuilder(
-                              future: fetchEpisodesByMovieId(widget.movies!.id!),
+                              future: fetchEpisodesByMovieId(widget.movies.id!),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return CircularProgressIndicator(); // Hiển thị tiến trình chờ
+                                  return const CircularProgressIndicator(); // Hiển thị tiến trình chờ
                                 } else if (snapshot.hasError) {
                                   return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
                                 } else {
@@ -171,7 +179,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                         ],
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,14 +195,14 @@ class _DetailWidgetState extends State<DetailWidget> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
                           for ( int i =1; i <4; i++)
                             Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.asset(
@@ -221,8 +229,8 @@ class _DetailWidgetState extends State<DetailWidget> {
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
       ),
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.only(bottom: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -233,7 +241,7 @@ class _DetailWidgetState extends State<DetailWidget> {
               child: Text(
                 episode.name!,
                 style:
-                TextStyle(
+                const TextStyle(
                   color: Colors.black,
                 ),
               ),)
@@ -248,11 +256,18 @@ class _DetailWidgetState extends State<DetailWidget> {
       final videoid = YoutubePlayer.convertUrlToId(widget.movies.trailer!);
       _controller = YoutubePlayerController(initialVideoId: videoid!,
         flags: const YoutubePlayerFlags(
-          autoPlay: true,
+          autoPlay: false,
         ),
       );
     }
-    else
+    else {
       widget.movies.trailer = " ";
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

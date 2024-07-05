@@ -14,6 +14,8 @@ class FlashScreen extends StatefulWidget {
   State<FlashScreen> createState() => _FlashScreenState();
 }
 class SetupdataWidget extends StatelessWidget {
+  const SetupdataWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Database>(
@@ -21,7 +23,7 @@ class SetupdataWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Trạng thái đang chờ, có thể hiển thị một widget tạm thời
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           // Đã xảy ra lỗi
           return Text('Error: ${snapshot.error}');
@@ -39,9 +41,9 @@ class _FlashScreenState extends State<FlashScreen>
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds:2),() {
+    Future.delayed(const Duration(seconds:2),() {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_)=> SetupdataWidget(),
+        MaterialPageRoute(builder: (_)=> const SetupdataWidget(),
         ),
       );
     });

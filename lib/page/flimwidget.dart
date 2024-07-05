@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:netflex/config/api_service.dart';
-import 'package:netflex/config/const.dart';
-import 'package:netflex/data/data.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/detail_widget.dart';
 
-Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
+Widget slideposter(BuildContext context) {
   return FutureBuilder<List<Movies>>(
     future: fetchMovies(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return CircularProgressIndicator(); // Hiển thị tiến trình chờ
+        return const CircularProgressIndicator(); // Hiển thị tiến trình chờ
       } else if (snapshot.hasError) {
         return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
       } else {
@@ -47,7 +45,7 @@ Widget slideposter(Future<List<Map<String,dynamic>>> listPoster) {
     },
   );
 }
-Widget slidetrending(List<Movies> listPoster){
+Widget slidetrending(List<Movies> listPoster,BuildContext context){
   return CarouselSlider(
       options: CarouselOptions(
         autoPlay: false,
@@ -57,21 +55,46 @@ Widget slidetrending(List<Movies> listPoster){
         viewportFraction: 0.45,
       ),
       items: listPoster.map((imgposter) =>
-          Container(
-            margin: const EdgeInsets.all(5.0),
-            height: 500,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              child: Stack(
-                children: <Widget>[
-                  Image.asset(
-                    imgposter.img!,
-                    fit: BoxFit.cover,
-                    height: 500,
-                  ),
-                ],
-              ),
+      GestureDetector(
+        onTap:(){
+
+        },
+        child: Container(
+          margin: const EdgeInsets.all(5.0),
+          height: 500,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
+            child: Stack(
+              children: <Widget>[
+                Image.asset(
+                  imgposter.img!,
+                  fit: BoxFit.cover,
+                  height: 500,
+                ),
+              ],
             ),
-          )).toList());
+          ),
+        ),
+      )
+          ).toList());
+}
+Widget itemListView (Movies movies){
+  return Container(
+    color: Colors.black,
+    child:
+        Row(
+          children: [
+            Image.network(
+              width: 100,
+                height: 100,
+                movies.img!
+            ),
+            Text(movies.title!,
+              style: TextStyle(
+                color: Colors.white,
+              ),),
+          ],
+        )
+  );
 }
 
