@@ -44,7 +44,22 @@ namespace netflexapi.Controllers
 
             return user;
         }
+        [HttpGet("signin/{email}")]
+        public async Task<ActionResult<User>> GetUserByEmail(string email)
+        {
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            var user = await _context.Users.FirstOrDefaultAsync(e => e.Email == email);
 
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -141,6 +156,23 @@ namespace netflexapi.Controllers
             var exists = await _context.Users.AnyAsync(e => e.Email == email);
 
             if (!exists)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn(UserSignIn user)
+        {
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var checkUser = await _context.Users.AnyAsync(a => a.Email == user.Email && a.Password == user.Password);
+
+            if (!checkUser)
             {
                 return NotFound();
             }

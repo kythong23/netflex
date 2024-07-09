@@ -1,14 +1,20 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'home.dart';
 import '../api/google_signin_api.dart';
 import '../data/user.dart';
+import '../data/user_signin.dart';
 import '../config/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
-
-  const  LoginScreen({Key? key}) : super(key: key);
+  final Database database;
+  const LoginScreen({super.key,required this.database});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -23,9 +29,23 @@ class _LoginScreenState extends State<LoginScreen> {
   int _selectedIndex = 0;
 
   late final Database database;
+
+ void checkLogged() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String strUser = pref.getString('user')!;
+    if(strUser != null){
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MyHome(database: widget.database
+      )));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    checkLogged();
+    // new Future.delayed(const Duration(seconds: 3), () => checkLogged());
   }
 
   @override
@@ -97,25 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 22.0
                 ),
               ),
-              onPressed: () async {
-                final email = _emailController.text;
-                final password = _passwordController.text;
-
-                if (email.isEmpty || password.isEmpty) {
-                  showDialog(context: context, builder: (_) => AlertDialog(
-                    title: const Text('Error'),
-                    content: const Text('Please enter your email and password'),
-                    actions: [
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () =>  Navigator.of(context, rootNavigator: true).pop('dialog'),
-                      )
-                    ],
-                  ));
-
-                  return;
-                }
-              },
+              onPressed: signInPassword,
             ),
           ),
           const SizedBox(height:20),
@@ -132,20 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.red,
                 ),
               ),
-              SizedBox(width: 40),
-              // Gmail Icon
-              FaIcon(
-                FontAwesomeIcons.facebook,
-                size: 40,
-                color: Colors.red,
-              ),
-              SizedBox(width: 40),
-              // Gmail Icon
-              FaIcon(
-                FontAwesomeIcons.instagram,
-                size: 40,
-                color: Colors.red,
-              ),
             ],
           ),
           const SizedBox(height: 20.0),
@@ -160,13 +148,13 @@ class _LoginScreenState extends State<LoginScreen> {
               });
             },
           ),
-          MaterialButton(
-            child: const Text(
-              "Forgot your password?",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {},
-          ),
+          // MaterialButton(
+          //   child: const Text(
+          //     "Forgot your password?",
+          //     style: TextStyle(color: Colors.white),
+          //   ),
+          //   onPressed: () {},
+          // ),
         ],
       ),
     );
@@ -297,21 +285,60 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future signInGoogle() async
-  {
+  Future SignIn(email) async{
+    User? user = await fetchUserByEmail(email);
+    if(user != null){
+      saveUser(user);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyHome(database: widget.database
+      )));
+    }else{
+      ShowDialog('Something wrong');
+    }
+  }
+
+  Future<bool> saveUser(User user) async{
+    try{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String strUser = jsonEncode(user);
+      prefs.setString('user', strUser);
+      return true;
+    } catch(e){
+      print(e);
+      return false;
+    }
+  }
+
+  Future signInPassword() async{
+      UserSignIn user = UserSignIn();
+      user.email = _emailController.text;
+      user.password = _passwordController.text;
+
+      if (user.email!.isEmpty || user.password!.isEmpty) {
+        ShowDialog('Please enter your email and password');
+        return;
+      }
+
+      bool success = await checkUser(user);
+      if(success) {
+        await SignIn(user.email);
+      }else{
+        ShowDialog('Email or password is incorrect');
+      }
+  }
+  Future signInGoogle() async{
     final user = await GoogleSignInApi.login;
 
-    bool userExists = await checkUser(user!.email!);
+    bool userExists = await checkEmail(user!.email!);
 
-    if(userExists)
-    {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('email exist')));
-
-    }else
-    {
+    if(userExists){
+      SignIn(user.email);
+    }
+    else{
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Please resgister for this email')));
+
       _emailController.text = user!.email;
       _nameController.text = user!.displayName!;
 
@@ -331,63 +358,42 @@ class _LoginScreenState extends State<LoginScreen> {
     user.status = "";
 
     bool validate = await validateUser(user);
-    if(validate)
-    {
-      final response = await createUser(user);
-      if(response.statusCode == 201){
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Success')));
+    if(validate){
+      final success = await createUser(user);
+      if(success){
+        SignIn(user.email);
       }else{
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Something wrong')));
+        ShowDialog('Something wrong');
       }
     }
   }
   Future<bool> validateUser(User user) async{
     if (user.username!.isEmpty) {
-      showDialog(context: context, builder: (_) =>
-          AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Please enter your user name!'),
-            actions: [
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () =>
-                    Navigator.of(context, rootNavigator: true).pop('dialog'),
-              )
-            ],
-          ));
+      ShowDialog('Please enter your user name!');
       return false;
     }
     if (user.email!.isEmpty || user.password!.isEmpty) {
-      showDialog(context: context, builder: (_) =>
-          AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Please enter your email and password!'),
-            actions: [
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () =>
-                    Navigator.of(context, rootNavigator: true).pop('dialog'),
-              )
-            ],
-          ));
+      ShowDialog('Please enter your email and password!');
       return false;
     }
-    bool userExists = await checkUser(_emailController.text);
+    bool userExists = await checkEmail(_emailController.text);
     if(userExists) {
-      showDialog(context: context, builder: (_) => AlertDialog(
-        title: const Text('Error'),
-        content: const Text('This email is used.'),
-        actions: [
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () => Navigator.of(context, rootNavigator: true).pop('dialog'),
-          )
-        ],
-      ));
+      ShowDialog('This email is used.');
       return false;
     }
     return true;
+  }
+  void ShowDialog(String text)
+  {
+    showDialog(context: context, builder: (_) => AlertDialog(
+      title: const Text('Error'),
+      content: Text(text),
+      actions: [
+        TextButton(
+          child: const Text('OK'),
+          onPressed: () =>  Navigator.of(context, rootNavigator: true).pop('dialog'),
+        )
+      ],
+    ));
   }
 }
