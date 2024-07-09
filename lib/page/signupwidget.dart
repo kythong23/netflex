@@ -1,11 +1,20 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'home.dart';
+import '../api/google_signin_api.dart';
+import '../data/user.dart';
+import '../data/user_signin.dart';
+import '../config/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
-
-  const  LoginScreen({Key? key}) : super(key: key);
+  final Database database;
+  const LoginScreen({super.key,required this.database});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -20,9 +29,23 @@ class _LoginScreenState extends State<LoginScreen> {
   int _selectedIndex = 0;
 
   late final Database database;
+
+ void checkLogged() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String strUser = pref.getString('user')!;
+    if(strUser != null){
+      Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MyHome(database: widget.database
+      )));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    checkLogged();
+    // new Future.delayed(const Duration(seconds: 3), () => checkLogged());
   }
 
   @override
@@ -94,25 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 22.0
                 ),
               ),
-              onPressed: () async {
-                final email = _emailController.text;
-                final password = _passwordController.text;
-
-                if (email.isEmpty || password.isEmpty) {
-                  showDialog(context: context, builder: (_) => AlertDialog(
-                    title: const Text('Error'),
-                    content: const Text('Please enter your email and password'),
-                    actions: [
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () =>  Navigator.of(context, rootNavigator: true).pop('dialog'),
-                      )
-                    ],
-                  ));
-
-                  return;
-                }
-              },
+              onPressed: signInPassword,
             ),
           ),
           const SizedBox(height:20),
@@ -120,24 +125,14 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Google Icon
-              FaIcon(
-                FontAwesomeIcons.google,
-                size: 40,
-                color: Colors.red,
-              ),
-              SizedBox(width: 40),
-              // Gmail Icon
-              FaIcon(
-                FontAwesomeIcons.facebook,
-                size: 40,
-                color: Colors.red,
-              ),
-              SizedBox(width: 40),
-              // Gmail Icon
-              FaIcon(
-                FontAwesomeIcons.instagram,
-                size: 40,
-                color: Colors.red,
+              InkWell(
+                onTap: signInGoogle,
+                child:
+                FaIcon(
+                  FontAwesomeIcons.google,
+                  size: 40,
+                  color: Colors.red,
+                ),
               ),
             ],
           ),
@@ -153,13 +148,13 @@ class _LoginScreenState extends State<LoginScreen> {
               });
             },
           ),
-          MaterialButton(
-            child: const Text(
-              "Forgot your password?",
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {},
-          ),
+          // MaterialButton(
+          //   child: const Text(
+          //     "Forgot your password?",
+          //     style: TextStyle(color: Colors.white),
+          //   ),
+          //   onPressed: () {},
+          // ),
         ],
       ),
     );
@@ -245,27 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 22.0
                 ),
               ),
-              onPressed: () async {
-                final name = _nameController.text;
-                final email = _emailController.text;
-                final password = _passwordController.text;
-
-                if (email.isEmpty || password.isEmpty) {
-                  showDialog(context: context, builder: (_) => AlertDialog(
-                    title: const Text('Error'),
-                    content: const Text('Please enter your email and password'),
-                    actions: [
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () => Navigator.of(context, rootNavigator: true).pop('dialog'),
-                      )
-                    ],
-                  ));
-
-                  return;
-                }
-
-              },
+              onPressed: signUp,
             ),
           ),
           const SizedBox(height: 10.0),
@@ -297,9 +272,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-
-    _emailController.text = "";
-
     return Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.black,
@@ -311,5 +283,117 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         )
     );
+  }
+
+  Future SignIn(email) async{
+    User? user = await fetchUserByEmail(email);
+    if(user != null){
+      saveUser(user);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyHome(database: widget.database
+      )));
+    }else{
+      ShowDialog('Something wrong');
+    }
+  }
+
+  Future<bool> saveUser(User user) async{
+    try{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String strUser = jsonEncode(user);
+      prefs.setString('user', strUser);
+      return true;
+    } catch(e){
+      print(e);
+      return false;
+    }
+  }
+
+  Future signInPassword() async{
+      UserSignIn user = UserSignIn();
+      user.email = _emailController.text;
+      user.password = _passwordController.text;
+
+      if (user.email!.isEmpty || user.password!.isEmpty) {
+        ShowDialog('Please enter your email and password');
+        return;
+      }
+
+      bool success = await checkUser(user);
+      if(success) {
+        await SignIn(user.email);
+      }else{
+        ShowDialog('Email or password is incorrect');
+      }
+  }
+  Future signInGoogle() async{
+    final user = await GoogleSignInApi.login;
+
+    bool userExists = await checkEmail(user!.email!);
+
+    if(userExists){
+      SignIn(user.email);
+    }
+    else{
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Please resgister for this email')));
+
+      _emailController.text = user!.email;
+      _nameController.text = user!.displayName!;
+
+      setState(() {
+        _selectedIndex = 1;
+      });
+    }
+  }
+  Future signUp() async {
+    User user = User();
+    final now = DateTime.now();
+    user.userId = now.microsecond*100 + now.hour + now.month + now.year * 1000 + now.day ;
+    user.email = _emailController.text;
+    user.username = _nameController.text;
+    user.password = _passwordController.text;
+    user.role = "";
+    user.status = "";
+
+    bool validate = await validateUser(user);
+    if(validate){
+      final success = await createUser(user);
+      if(success){
+        SignIn(user.email);
+      }else{
+        ShowDialog('Something wrong');
+      }
+    }
+  }
+  Future<bool> validateUser(User user) async{
+    if (user.username!.isEmpty) {
+      ShowDialog('Please enter your user name!');
+      return false;
+    }
+    if (user.email!.isEmpty || user.password!.isEmpty) {
+      ShowDialog('Please enter your email and password!');
+      return false;
+    }
+    bool userExists = await checkEmail(_emailController.text);
+    if(userExists) {
+      ShowDialog('This email is used.');
+      return false;
+    }
+    return true;
+  }
+  void ShowDialog(String text)
+  {
+    showDialog(context: context, builder: (_) => AlertDialog(
+      title: const Text('Error'),
+      content: Text(text),
+      actions: [
+        TextButton(
+          child: const Text('OK'),
+          onPressed: () =>  Navigator.of(context, rootNavigator: true).pop('dialog'),
+        )
+      ],
+    ));
   }
 }

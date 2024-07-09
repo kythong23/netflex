@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj": {}
+    "D:\\aaaaaaa\\netflexapi\\netflexapi\\netflexapi.csproj": {}
   },
   "projects": {
-    "D:\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj": {
+    "D:\\aaaaaaa\\netflexapi\\netflexapi\\netflexapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj",
+        "projectUniqueName": "D:\\aaaaaaa\\netflexapi\\netflexapi\\netflexapi.csproj",
         "projectName": "netflexapi",
-        "projectPath": "D:\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\netflex\\netflexapi\\netflexapi\\obj\\",
+        "projectPath": "D:\\aaaaaaa\\netflexapi\\netflexapi\\netflexapi.csproj",
+        "packagesPath": "C:\\Users\\Hoang Dai\\.nuget\\packages\\",
+        "outputPath": "D:\\aaaaaaa\\netflexapi\\netflexapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hoang Dai\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,17 +39,60 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.31, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.31, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.31, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.29, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.31, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.16, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

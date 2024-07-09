@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:netflex/page/profile.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../provider/provider.dart';
+import 'package:netflex/api/google_signin_api.dart';
+import 'package:netflex/page/flash_screen.dart';
 
 class SettingWidget extends StatefulWidget {
   const SettingWidget({super.key});
@@ -40,15 +43,25 @@ class _StateSettingWidget extends State<SettingWidget>{
                   title: const Text('Language'),
                   textColor: notifier.isDark ? Colors.white : Colors.black,
                 ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text('Logout'),
-                  textColor: notifier.isDark ? Colors.white : Colors.black,
-                ),
+                ElevatedButton(onPressed: Loggout
+                    , child: ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Logout'),
+                    textColor: notifier.isDark ? Colors.white : Colors.black,
+                  ),),
               ],
             );
           }
       ),
     );
+  }
+  Future Loggout() async{
+    await GoogleSignInApi.logout;
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.remove('user');
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FlashScreen()
+        ));
   }
 }
