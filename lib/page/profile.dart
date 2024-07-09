@@ -29,7 +29,7 @@ class _MyProfileState extends State<MyProfile> {
         backgroundColor: Colors.black,
         actions: [
           IconButton(onPressed: (){
-            Navigator.pop(context,MaterialPageRoute(builder: (context)=> SettingWidget()));
+            Navigator.push(context,MaterialPageRoute(builder: (context)=> SettingWidget()));
           }, icon: const Icon(Icons.menu),color: Colors.white,),
           IconButton(onPressed: (){
 
