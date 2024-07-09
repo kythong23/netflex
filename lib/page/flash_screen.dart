@@ -5,7 +5,7 @@ import 'package:netflex/page/home.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../data/data.dart';
-
+import './signupwidget.dart';
 
 class FlashScreen extends StatefulWidget {
   const FlashScreen ({super.key});
@@ -30,7 +30,8 @@ class SetupdataWidget extends StatelessWidget {
         } else {
           // Kết quả đã sẵn sàng, có thể sử dụng cơ sở dữ liệu ở đây
           Database database = snapshot.data!;
-          return MyHome(database: database);
+          // return MyHome(database: database);
+          return LoginScreen();
         }
       },
     );

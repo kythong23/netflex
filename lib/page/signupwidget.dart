@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'home.dart';
+import '../api/google_signin_api.dart';
+import '../data/user.dart';
+import '../config/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -120,10 +123,14 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Google Icon
-              FaIcon(
-                FontAwesomeIcons.google,
-                size: 40,
-                color: Colors.red,
+              InkWell(
+                onTap: signInGoogle,
+                child:
+                FaIcon(
+                  FontAwesomeIcons.google,
+                  size: 40,
+                  color: Colors.red,
+                ),
               ),
               SizedBox(width: 40),
               // Gmail Icon
@@ -245,27 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontSize: 22.0
                 ),
               ),
-              onPressed: () async {
-                final name = _nameController.text;
-                final email = _emailController.text;
-                final password = _passwordController.text;
-
-                if (email.isEmpty || password.isEmpty) {
-                  showDialog(context: context, builder: (_) => AlertDialog(
-                    title: const Text('Error'),
-                    content: const Text('Please enter your email and password'),
-                    actions: [
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () => Navigator.of(context, rootNavigator: true).pop('dialog'),
-                      )
-                    ],
-                  ));
-
-                  return;
-                }
-
-              },
+              onPressed: signUp,
             ),
           ),
           const SizedBox(height: 10.0),
@@ -297,9 +284,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-
-    _emailController.text = "";
-
     return Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.black,
@@ -311,5 +295,99 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         )
     );
+  }
+
+  Future signInGoogle() async
+  {
+    final user = await GoogleSignInApi.login;
+
+    bool userExists = await checkUser(user!.email!);
+
+    if(userExists)
+    {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('email exist')));
+
+    }else
+    {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Please resgister for this email')));
+      _emailController.text = user!.email;
+      _nameController.text = user!.displayName!;
+
+      setState(() {
+        _selectedIndex = 1;
+      });
+    }
+  }
+  Future signUp() async {
+    User user = User();
+    final now = DateTime.now();
+    user.userId = now.microsecond*100 + now.hour + now.month + now.year * 1000 + now.day ;
+    user.email = _emailController.text;
+    user.username = _nameController.text;
+    user.password = _passwordController.text;
+    user.role = "";
+    user.status = "";
+
+    bool validate = await validateUser(user);
+    if(validate)
+    {
+      final response = await createUser(user);
+      if(response.statusCode == 201){
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Success')));
+      }else{
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Something wrong')));
+      }
+    }
+  }
+  Future<bool> validateUser(User user) async{
+    if (user.username!.isEmpty) {
+      showDialog(context: context, builder: (_) =>
+          AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Please enter your user name!'),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () =>
+                    Navigator.of(context, rootNavigator: true).pop('dialog'),
+              )
+            ],
+          ));
+      return false;
+    }
+    if (user.email!.isEmpty || user.password!.isEmpty) {
+      showDialog(context: context, builder: (_) =>
+          AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Please enter your email and password!'),
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () =>
+                    Navigator.of(context, rootNavigator: true).pop('dialog'),
+              )
+            ],
+          ));
+      return false;
+    }
+    bool userExists = await checkUser(_emailController.text);
+    if(userExists) {
+      showDialog(context: context, builder: (_) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text('This email is used.'),
+        actions: [
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop('dialog'),
+          )
+        ],
+      ));
+      return false;
+    }
+    return true;
   }
 }
