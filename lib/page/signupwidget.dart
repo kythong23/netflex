@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'home.dart';
 
 class LoginScreen extends StatefulWidget {
 
-  const  LoginScreen({super.key});
+  const  LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -16,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   int _selectedIndex = 0;
 
+  late final Database database;
   @override
   void initState() {
     super.initState();
@@ -28,8 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   Widget _renderSignIn() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(60, 0, 60, 0),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Center(
             child: Image.asset('assets/images/logo.jpg', width: 200),
           ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 40),
           TextField(
             controller: _emailController,
             autofocus: false,
@@ -56,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 0.1,
             color: Colors.black,
           ),
-          const SizedBox(
+          SizedBox(
             height: 20,
           ),
           TextField(
@@ -108,12 +112,36 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   return;
                 }
-
-
               },
             ),
           ),
-          const SizedBox(height: 40.0),
+          const SizedBox(height:20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Google Icon
+              FaIcon(
+                FontAwesomeIcons.google,
+                size: 40,
+                color: Colors.red,
+              ),
+              SizedBox(width: 40),
+              // Gmail Icon
+              FaIcon(
+                FontAwesomeIcons.facebook,
+                size: 40,
+                color: Colors.red,
+              ),
+              SizedBox(width: 40),
+              // Gmail Icon
+              FaIcon(
+                FontAwesomeIcons.instagram,
+                size: 40,
+                color: Colors.red,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20.0),
           MaterialButton(
             child: const Text(
               "Don't have an account? Sign up",
@@ -125,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
               });
             },
           ),
-          const SizedBox(height: 10.0),
           MaterialButton(
             child: const Text(
               "Forgot your password?",
@@ -139,8 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _renderSignUp() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(60, 80, 60, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Center(
             child: Image.asset('assets/images/logo.jpg', width: 200),
           ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 40),
           TextField(
             controller: _nameController,
             autofocus: false,
@@ -167,6 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 0.1,
             color: Colors.black,
           ),
+          const SizedBox(height:20),
           TextField(
             controller: _emailController,
             autofocus: false,
@@ -185,6 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 0.1,
             color: Colors.black,
           ),
+          const SizedBox(height:20),
           TextField(
             controller: _passwordController,
             obscureText: true,
@@ -247,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             onPressed: () {},
           ),
-          const SizedBox(height: 40.0),
+          const SizedBox(height: 10.0),
           MaterialButton(
             child: const Text(
               "Already have an account? Sign in",

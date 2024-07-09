@@ -3,6 +3,7 @@ import 'package:netflex/config/const.dart';
 import 'package:netflex/page/flimwidget.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/data/data.dart';
+import 'package:netflex/page/settingwidget.dart';
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
@@ -28,7 +29,7 @@ class _MyProfileState extends State<MyProfile> {
         backgroundColor: Colors.black,
         actions: [
           IconButton(onPressed: (){
-
+            Navigator.pop(context,MaterialPageRoute(builder: (context)=> SettingWidget()));
           }, icon: const Icon(Icons.menu),color: Colors.white,),
           IconButton(onPressed: (){
 

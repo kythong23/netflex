@@ -3,6 +3,8 @@ import 'package:netflex/config/api_service.dart';
 import 'package:netflex/data/data.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/search_screen.dart';
+import 'package:netflex/provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'flimwidget.dart';
 
@@ -12,6 +14,7 @@ class DefautlWidget extends StatefulWidget {
   @override
   State<DefautlWidget> createState() => _DefautlWidgetState();
 }
+
 
 class _DefautlWidgetState extends State<DefautlWidget> {
   List<Movies> getfilm = [];
@@ -30,65 +33,67 @@ class _DefautlWidgetState extends State<DefautlWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(26, 26, 26, 100),
-      body:
-      Center(
-          child:
-          SingleChildScrollView(
-            child:Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children:<Widget> [
-                  Row(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/images/logo.jpg",
-                        width: 100,
+      body: Consumer<UiProvider>(
+        builder: (context,UiProvider notifier, child){
+          return Center(
+              child:
+              SingleChildScrollView(
+                child:Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children:<Widget> [
+                      Row(
+                        children: <Widget>[
+                          Image.asset(
+                            "assets/images/logo.jpg",
+                            width: 100,
+                          ),
+                          const SizedBox(width: 25),
+                          const Text(
+                            "TV Shows",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(width: 25),
+                          const Text(
+                            "Movies",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(width: 25),
+                          const Text(
+                            "My List",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(width: 10),
+                          IconButton(
+                            icon: const Icon(Icons.search),
+                            color: Colors.white,
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SearchScreen(allfilm: getfilm,)),
+                              );
+                            },
+                          ),
+                          Expanded(
+                            child: Container(),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 25),
-                      const Text(
-                        "TV Shows",
-                        style: TextStyle(color: Colors.white),
+                      slideposter(context),
+                      const Row(
+                        children: [
+                          Text("Trending Movies",
+                            style: TextStyle(color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,),
+                          )
+                        ],
                       ),
-                      const SizedBox(width: 25),
-                      const Text(
-                        "Movies",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(width: 25),
-                      const Text(
-                        "My List",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(width: 10),
-                      IconButton(
-                        icon: const Icon(Icons.search),
-                        color: Colors.white,
-                        onPressed: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SearchScreen(allfilm: getfilm,)),
-                          );
-                        },
-                      ),
-                      Expanded(
-                        child: Container(),
-                      ),
-                    ],
-                  ),
-                  slideposter(context),
-                  const Row(
-                    children: [
-                      Text("Trending Movies",
-                        style: TextStyle(color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,),
-                      )
-                    ],
-                  ),
-                  slidetrending(lsttrending,context),
-                ]),
-          )
-      ),
+                      slidetrending(lsttrending,context),
+                    ]),
+              )
+          );
+        },
+      )
     );
   }
 }
