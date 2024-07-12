@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+object value = builder.Services.AddSwaggerGen();
 
 // Configure DbContext with SQL Server
 builder.Services.AddDbContext<netflexContext>(options =>

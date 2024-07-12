@@ -8,8 +8,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class MyHome extends StatefulWidget {
-  final Database database;
-  const MyHome({super.key,required this.database});
+  const MyHome({super.key});
   @override
   State<MyHome> createState() => _MyHomeState();
 }
@@ -23,7 +22,7 @@ class _MyHomeState extends State<MyHome> {
   _loadWidget (int index){
     switch (index){
       case 0:
-        return DefautlWidget(database: widget.database);
+        return DefautlWidget();
       case 1:
         return const NewWidget();
       case 2:
@@ -32,7 +31,7 @@ class _MyHomeState extends State<MyHome> {
         }
       default:
         {
-          return DefautlWidget(database: widget.database);
+          return DefautlWidget();
         }
     }
   }

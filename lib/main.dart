@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:netflex/page/search_screen.dart';
-import 'package:netflex/page/settingwidget.dart';
-import 'package:netflex/page/signupwidget.dart';
 import 'package:netflex/provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'page/flash_screen.dart';
