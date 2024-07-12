@@ -25,18 +25,36 @@ class _WatchingWidgetState extends State<WatchingWidget> {
   @override
   void initState() {
     super.initState();
-    _videoPlayerController =  VideoPlayerController.networkUrl(Uri.parse(widget.link))
-      ..initialize().then((_) {
-        setState(() {
-          _chewieController = ChewieController(
-            videoPlayerController: _videoPlayerController,
-            autoPlay: true,
-            looping: false,
-            fullScreenByDefault: true,
-          );
-          _isInitialized = true;
+    if(_savePosition != null ){
+      _videoPlayerController =  VideoPlayerController.networkUrl(Uri.parse(widget.link))
+        ..initialize().then((_) {
+          setState(() {
+            _videoPlayerController.seekTo(_savePosition!);
+            _chewieController = ChewieController(
+              videoPlayerController: _videoPlayerController,
+              autoPlay: true,
+              looping: false,
+              fullScreenByDefault: false,
+            );
+            _isInitialized = true;
+          });
         });
-      });
+    }
+    else {
+      _videoPlayerController =
+      VideoPlayerController.networkUrl(Uri.parse(widget.link))
+        ..initialize().then((_) {
+          setState(() {
+            _chewieController = ChewieController(
+              videoPlayerController: _videoPlayerController,
+              autoPlay: true,
+              looping: false,
+              fullScreenByDefault: false,
+            );
+            _isInitialized = true;
+          });
+        });
+    }
   }
   @override
   Widget build(BuildContext context) {

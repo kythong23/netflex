@@ -74,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       shrinkWrap: true,
                       itemCount: searchResult.length,
                       itemBuilder: (context,index ){
-                        return itemListView(searchResult[index]);
+                        return itemListView(searchResult[index],this.context);
                       }),
                 ),
             ],

@@ -246,6 +246,7 @@ class _DetailWidgetState extends State<DetailWidget> {
   @override
   void initState() {
     super.initState();
+
     if(widget.movies.trailer != null ||  widget.movies.trailer!.isEmpty){
       final videoid = YoutubePlayer.convertUrlToId(widget.movies.trailer!);
       _controller = YoutubePlayerController(initialVideoId: videoid!,
