@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class ComingSoonWidget extends StatelessWidget{
+import 'package:timezone/data/latest.dart' as tz;
+
+import '../Services/notifi_service.dart';
+
+class ComingSoonWidget extends StatefulWidget {
   final String imageUrl;
   final String overview;
   final String logoUrl;
@@ -17,6 +21,21 @@ class ComingSoonWidget extends StatelessWidget{
   });
 
   @override
+  State<ComingSoonWidget> createState() => _ComingSoonWidgetState();
+}
+
+class _ComingSoonWidgetState extends State<ComingSoonWidget> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsFlutterBinding.ensureInitialized();
+    NotificationService().initNotification();
+    tz.initializeTimeZones();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size; //The value of local varial
     return SizedBox(
@@ -28,19 +47,19 @@ class ComingSoonWidget extends StatelessWidget{
             children: [
               const SizedBox(height: 10,),
               Text(
-                month,
+                widget.month,
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
               Text(
-                day,
+                widget.day,
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40,
-                    color: Colors.white,
-                    letterSpacing: 5,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  color: Colors.white,
+                  letterSpacing: 5,
                 ),
               )
             ],
@@ -50,30 +69,35 @@ class ComingSoonWidget extends StatelessWidget{
           ),
           Expanded(child: Column(
             children: [
-              CachedNetworkImage(imageUrl: imageUrl),
+              CachedNetworkImage(imageUrl: widget.imageUrl),
               Row(
                 children: [
                   SizedBox(
                     width: size.width*0.5,
                     height: size.height*0.2,
                     child: CachedNetworkImage(
-                      imageUrl: logoUrl,
+                      imageUrl: widget.logoUrl,
                       alignment: Alignment.centerLeft,
                     ),
                   ),
-                  const Column(
+                  Column(
                     children: [
-                      Icon(
+                      IconButton(
+                        onPressed: () {NotificationService().showNotification(
+                          title: 'Neflex',
+                          body: 'Phim hiện đã ra mắt, mới bạn vào xem',
+                        );}
+                        , icon: Icon(
                         Icons.info_outline_rounded,
                         size: 25,
                         color: Colors.white,
-                      ),
+                      )),
                       Text(
-                       "Remind me",
-                       style: TextStyle(
-                         fontSize: 10,
-                         color: Colors.white,
-                       ),
+                        "Remind me",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                        ),
                       )
                     ],
                   ),
@@ -90,8 +114,8 @@ class ComingSoonWidget extends StatelessWidget{
                       Text(
                         "Info",
                         style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
+                          fontSize: 10,
+                          color: Colors.white,
                         ),
                       )
                     ],
@@ -105,17 +129,17 @@ class ComingSoonWidget extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Coming on $month $day",
+                    "Coming on ${widget.month} ${widget.day}",
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
                     ),
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    overview,
+                    widget.overview,
                     maxLines: 4,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
@@ -133,5 +157,5 @@ class ComingSoonWidget extends StatelessWidget{
       ),
     );
   }
-
 }
+
