@@ -16,6 +16,7 @@ class DetailWidget extends StatefulWidget {
 
 class _DetailWidgetState extends State<DetailWidget> {
   late YoutubePlayerController _controller;
+  String firstepisodelink =" ";
   @override
   Widget build(BuildContext context) {
     Movies movies = widget.movies;
@@ -113,7 +114,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                                   InkWell(
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute
-                                        (builder: (context)=>const WatchingWidget(link: " ",)));
+                                        (builder: (context)=>WatchingWidget(link:firstepisodelink)));
                                     },
                                     child: const Icon(
                                       Icons.play_arrow,
@@ -167,10 +168,12 @@ class _DetailWidgetState extends State<DetailWidget> {
                                   return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
                                 } else {
                                   List<Episode> listepisode = snapshot.data!;
-                                  return Column(
-                                    children: [
+                                  return Wrap(
+                                    spacing: 10,
+                                    children:
+                                    [
                                       for (var episode in listepisode)
-                                        listEpisode(episode),
+                                      listEpisode(episode,this.context),
                                     ],
                                   );
                                 }
@@ -223,45 +226,41 @@ class _DetailWidgetState extends State<DetailWidget> {
       ,]
     ));
   }
-  Widget listEpisode (Episode episode){
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-      ),
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute
-              (builder: (context)=>WatchingWidget(link: episode.link!,)));
-          },
-              child: Text(
-                episode.name!,
-                style:
-                const TextStyle(
-                  color: Colors.black,
-                ),
-              ),)
-      ],),
-    );
+  Widget listEpisode (Episode episode,BuildContext context){
+    if(episode.name! == "Tập 1"){
+        firstepisodelink = episode.link!;
+    };
+    return ElevatedButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute
+        (builder: (context)=>WatchingWidget(link: episode.link!,)));
+    },
+        child: Text(
+          episode.name!,
+          style:
+          const TextStyle(
+            color: Colors.white,
+          ),
+        ),);
   }
 
   @override
   void initState() {
     super.initState();
-    if(widget.movies.trailer != null ){
+    if(widget.movies.trailer != null ||  widget.movies.trailer!.isEmpty){
       final videoid = YoutubePlayer.convertUrlToId(widget.movies.trailer!);
       _controller = YoutubePlayerController(initialVideoId: videoid!,
         flags: const YoutubePlayerFlags(
-          autoPlay: false,
+          autoPlay: true,
         ),
       );
     }
     else {
       widget.movies.trailer = " ";
+      _controller = YoutubePlayerController(initialVideoId: " ",
+        flags: const YoutubePlayerFlags(
+          autoPlay: true,
+        ),
+      );
     }
   }
 

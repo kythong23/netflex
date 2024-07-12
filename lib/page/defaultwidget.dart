@@ -5,12 +5,10 @@ import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/search_screen.dart';
 import 'package:netflex/provider/provider.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'flimwidget.dart';
 
 class DefautlWidget extends StatefulWidget {
-  const DefautlWidget({super.key,required this.database});
-  final Database database;
+  const DefautlWidget({super.key});
   @override
   State<DefautlWidget> createState() => _DefautlWidgetState();
 }
@@ -22,6 +20,7 @@ class _DefautlWidgetState extends State<DefautlWidget> {
 
   @override
   void initState() {
+    super.initState();
     lsttrending = getFlim(3);
     Future<List<Movies>> getallflim()async{
       Future<List<Movies>> futureMovies = fetchMovies();

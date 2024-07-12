@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,8 +12,7 @@ import '../data/user_signin.dart';
 import '../config/api_service.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Database database;
-  const LoginScreen({super.key,required this.database});
+  const LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -28,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   int _selectedIndex = 0;
 
-  late final Database database;
 
  void checkLogged() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -36,8 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if(strUser != null){
       Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MyHome(database: widget.database
-      )));
+          MaterialPageRoute(builder: (context) => MyHome()));
     }
   }
 
@@ -291,8 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
       saveUser(user);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyHome(database: widget.database
-      )));
+        MaterialPageRoute(builder: (context) => MyHome()));
     }else{
       ShowDialog('Something wrong');
     }
@@ -354,8 +349,8 @@ class _LoginScreenState extends State<LoginScreen> {
     user.email = _emailController.text;
     user.username = _nameController.text;
     user.password = _passwordController.text;
-    user.role = "";
-    user.status = "";
+    user.role = "normal";
+    user.status = "active";
 
     bool validate = await validateUser(user);
     if(validate){

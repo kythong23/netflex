@@ -14,30 +14,6 @@ class FlashScreen extends StatefulWidget {
   @override
   State<FlashScreen> createState() => _FlashScreenState();
 }
-class SetupdataWidget extends StatelessWidget {
-  const SetupdataWidget({super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<Database>(
-      future: initializeDatabase(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // Trạng thái đang chờ, có thể hiển thị một widget tạm thời
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          // Đã xảy ra lỗi
-          return Text('Error: ${snapshot.error}');
-        } else {
-          // Kết quả đã sẵn sàng, có thể sử dụng cơ sở dữ liệu ở đây
-          Database database = snapshot.data!;
-          return LoginScreen(database: database);
-        }
-      },
-    );
-  }
-}
 class _FlashScreenState extends State<FlashScreen>
     with SingleTickerProviderStateMixin {
   @override
@@ -45,7 +21,7 @@ class _FlashScreenState extends State<FlashScreen>
     super.initState();
     Future.delayed(const Duration(seconds:2),() {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_)=> const SetupdataWidget(),
+        MaterialPageRoute(builder: (_)=> LoginScreen(),
         ),
       );
     });
@@ -68,9 +44,7 @@ class _FlashScreenState extends State<FlashScreen>
               Lottie.asset('assets/netflex.json'),
             ],
           ),
-
         ),
-
       ),
     );
   }

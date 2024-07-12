@@ -20,9 +20,11 @@ namespace netflexapi.Models
         public virtual DbSet<Country> Countries { get; set; } = null!;
         public virtual DbSet<Creator> Creators { get; set; } = null!;
         public virtual DbSet<Episode> Episodes { get; set; } = null!;
+        public virtual DbSet<FavorMovie> FavorMovies { get; set; } = null!;
         public virtual DbSet<Genre> Genres { get; set; } = null!;
         public virtual DbSet<Movie> Movies { get; set; } = null!;
         public virtual DbSet<News> News { get; set; } = null!;
+        public virtual DbSet<Subcription> Subcriptions { get; set; } = null!;
         public virtual DbSet<Subtitle> Subtitles { get; set; } = null!;
         public virtual DbSet<TvShow> TvShows { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -110,6 +112,29 @@ namespace netflexapi.Models
                     .WithMany(p => p.Episodes)
                     .HasForeignKey(d => d.MovieId)
                     .HasConstraintName("FK__Episode__movie_i__7B5B524B");
+            });
+
+            modelBuilder.Entity<FavorMovie>(entity =>
+            {
+                entity.HasKey(e => e.FavorId);
+
+                entity.ToTable("FavorMovie");
+
+                entity.Property(e => e.FavorId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("FavorID");
+
+                entity.Property(e => e.MovieId).HasColumnName("MovieID");
+
+                entity.HasOne(d => d.Movie)
+                    .WithMany(p => p.FavorMovies)
+                    .HasForeignKey(d => d.MovieId)
+                    .HasConstraintName("FK__FavorMovi__Movie__17F790F9");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.FavorMovies)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__FavorMovi__UserI__18EBB532");
             });
 
             modelBuilder.Entity<Genre>(entity =>
@@ -208,6 +233,8 @@ namespace netflexapi.Models
                     .ValueGeneratedNever()
                     .HasColumnName("news_id");
 
+                entity.Property(e => e.Movieid).HasColumnName("movieid");
+
                 entity.Property(e => e.NewsContent)
                     .HasMaxLength(50)
                     .HasColumnName("news_content");
@@ -215,6 +242,38 @@ namespace netflexapi.Models
                 entity.Property(e => e.NewsDateRelease)
                     .HasMaxLength(50)
                     .HasColumnName("news_date_release");
+
+                entity.Property(e => e.Userid).HasColumnName("userid");
+
+                entity.HasOne(d => d.Movie)
+                    .WithMany(p => p.News)
+                    .HasForeignKey(d => d.Movieid)
+                    .HasConstraintName("FK__News__movieid__1AD3FDA4");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.News)
+                    .HasForeignKey(d => d.Userid)
+                    .HasConstraintName("FK__News__userid__1BC821DD");
+            });
+
+            modelBuilder.Entity<Subcription>(entity =>
+            {
+                entity.HasKey(e => e.SubId);
+
+                entity.ToTable("Subcription");
+
+                entity.Property(e => e.SubId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("SubID");
+
+                entity.Property(e => e.SubName).HasMaxLength(100);
+
+                entity.Property(e => e.Userid).HasColumnName("userid");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Subcriptions)
+                    .HasForeignKey(d => d.Userid)
+                    .HasConstraintName("FK__Subcripti__useri__19DFD96B");
             });
 
             modelBuilder.Entity<Subtitle>(entity =>
@@ -258,8 +317,6 @@ namespace netflexapi.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("User");
-
                 entity.Property(e => e.UserId)
                     .ValueGeneratedNever()
                     .HasColumnName("user_id");

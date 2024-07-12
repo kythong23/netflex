@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:netflex/provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import 'comingsoon_widget.dart';
 
@@ -19,7 +21,6 @@ class _NewWidgetState extends State<NewWidget>{
           child: Scaffold(
             appBar: AppBar(
               elevation: 0,
-              backgroundColor: Colors.black,
               title: const Text("News", style: TextStyle(
                 color: Colors.white,
               ),
@@ -48,56 +49,58 @@ class _NewWidgetState extends State<NewWidget>{
               ],
               ),
             ),
-            backgroundColor: const Color.fromARGB(26, 26, 26, 100),
-            body: const TabBarView(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ComingSoonWidget(
-                        imageUrl:
-                        'https://miro.medium.com/v2/resize:fit:1024/1*P_YU8dGinbCy6GHlgq5OQA.jpeg',
-                        overview:
-                        'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',
-                        logoUrl:
-                        "https://s3.amazonaws.com/www-inside-design/uploads/2017/10/strangerthings_feature-983x740.jpg",
-                        month: "Jun",
-                        day: "19",
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ComingSoonWidget(
-                        imageUrl:
-                        'https://www.pinkvilla.com/images/2022-09/rrr-review.jpg',
-                        overview:
-                        'A fearless revolutionary and an officer in the British force, who once shared a deep bond, decide to join forces and chart out an inspirational path of freedom against the despotic rulers.',
-                        logoUrl:
-                        "https://www.careerguide.com/career/wp-content/uploads/2023/10/RRR_full_form-1024x576.jpg",
-                        month: "Mar",
-                        day: "07",
-                      ),
-                    ],
+            body: Consumer<UiProvider>(
+              builder: (context,UiProvider notifier, child){
+              return const TabBarView(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ComingSoonWidget(
+                          imageUrl:
+                          'https://miro.medium.com/v2/resize:fit:1024/1*P_YU8dGinbCy6GHlgq5OQA.jpeg',
+                          overview:
+                          'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',
+                          logoUrl:
+                          "https://s3.amazonaws.com/www-inside-design/uploads/2017/10/strangerthings_feature-983x740.jpg",
+                          month: "Jun",
+                          day: "19",
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ComingSoonWidget(
+                          imageUrl:
+                          'https://www.pinkvilla.com/images/2022-09/rrr-review.jpg',
+                          overview:
+                          'A fearless revolutionary and an officer in the British force, who once shared a deep bond, decide to join forces and chart out an inspirational path of freedom against the despotic rulers.',
+                          logoUrl:
+                          "https://www.careerguide.com/career/wp-content/uploads/2023/10/RRR_full_form-1024x576.jpg",
+                          month: "Mar",
+                          day: "07",
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ComingSoonWidget(
-                        imageUrl:
-                        'https://miro.medium.com/v2/resize:fit:1024/1*P_YU8dGinbCy6GHlgq5OQA.jpeg',
-                        overview:
-                        'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',
-                        logoUrl:
-                        "https://logowik.com/content/uploads/images/stranger-things4286.jpg",
-                        month: "Feb",
-                        day: "20",
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ComingSoonWidget(
+                          imageUrl:
+                          'https://miro.medium.com/v2/resize:fit:1024/1*P_YU8dGinbCy6GHlgq5OQA.jpeg',
+                          overview:
+                          'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',
+                          logoUrl:
+                          "https://logowik.com/content/uploads/images/stranger-things4286.jpg",
+                          month: "Feb",
+                          day: "20",
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            },),
           ),
         ),
     );
