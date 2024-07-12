@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "F3xHpETtZShAcuHXpq3vOcAcoNRFY+S6/fw54zKBFLXq0iLjN3hSvqqI/LmSahrjqmvL9utLYqSxq1I/J/zcuw==",
+  "dgSpecHash": "xoSwgUH/2X6pCG6Lk5LV2+pNOzFq98MfNZC3PNkyDBcX9b9Dqdgq4PGwg7eiayLKbmGMPNa7u2J6a9j49xJkEQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\acer\\Desktop\\netlexapiwebadmin\\netlexapiwebadmin\\netlexapiwebadmin.csproj",
+  "projectFilePath": "C:\\Users\\acer\\Desktop\\netflex\\netlexapiwebadmin\\netlexapiwebadmin\\netlexapiwebadmin.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\acer\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\acer\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

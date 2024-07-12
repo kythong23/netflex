@@ -78,22 +78,27 @@ Widget slidetrending(List<Movies> listPoster,BuildContext context){
       )
           ).toList());
 }
-Widget itemListView (Movies movies){
+Widget itemListView (Movies movies,BuildContext context){
   return Container(
     color: Colors.black,
     child:
-        Row(
-          children: [
-            Image.network(
-              width: 100,
-                height: 100,
-                movies.img!
-            ),
-            Text(movies.title!,
-              style: TextStyle(
-                color: Colors.white,
-              ),),
-          ],
+        InkWell(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWidget(movies: movies)));
+          },
+          child: Row(
+            children: [
+              Image.network(
+                width: 100,
+                  height: 100,
+                  movies.img!
+              ),
+              Text(movies.title!,
+                style: TextStyle(
+                  color: Colors.white,
+                ),),
+            ],
+          ),
         )
   );
 }
