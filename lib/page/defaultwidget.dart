@@ -5,14 +5,15 @@ import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/search_screen.dart';
 import 'package:netflex/provider/provider.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 import 'flimwidget.dart';
 
 class DefautlWidget extends StatefulWidget {
   const DefautlWidget({super.key});
+
   @override
   State<DefautlWidget> createState() => _DefautlWidgetState();
 }
-
 
 class _DefautlWidgetState extends State<DefautlWidget> {
   List<Movies> getfilm = [];
@@ -20,79 +21,126 @@ class _DefautlWidgetState extends State<DefautlWidget> {
 
   @override
   void initState() {
-    super.initState();
     lsttrending = getFlim(3);
-    Future<List<Movies>> getallflim()async{
+    Future<List<Movies>> getallflim() async {
       Future<List<Movies>> futureMovies = fetchMovies();
       getfilm = await futureMovies;
       return getfilm;
     }
     getallflim();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<UiProvider>(
-        builder: (context,UiProvider notifier, child){
-          return Center(
-              child:
+    return Consumer<UiProvider>(
+      builder: (context, UiProvider notifier, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    width: 100, // Điều chỉnh kích thước hình ảnh
+                    height: 100, // Điều chỉnh kích thước hình ảnh
+                  ),
+                ),
+                Spacer(), // Đẩy các phần tử khác sang bên phải
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen(allfilm: getfilm)),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          body: Stack(
+            children: [
               SingleChildScrollView(
-                child:Column(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0), // Giảm padding hoặc điều chỉnh theo ý muốn
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children:<Widget> [
+                    children: <Widget>[
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Image.asset(
-                            "assets/images/logo.jpg",
-                            width: 100,
-                          ),
-                          const SizedBox(width: 25),
-                          const Text(
-                            "TV Shows",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(width: 25),
-                          const Text(
-                            "Movies",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(width: 25),
-                          const Text(
-                            "My List",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(width: 10),
-                          IconButton(
-                            icon: const Icon(Icons.search),
-                            color: Colors.white,
-                            onPressed: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SearchScreen(allfilm: getfilm,)),
-                              );
-                            },
-                          ),
                           Expanded(
-                            child: Container(),
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Text(
+                                "TV Shows",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,), // Đặt màu chữ
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10), // Khoảng cách giữa các container
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Text(
+                                "Movies",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white), // Đặt màu chữ
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10), // Khoảng cách giữa các container
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Text(
+                                "Genre",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white), // Đặt màu chữ
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       slideposter(context),
                       const Row(
                         children: [
-                          Text("Trending Movies",
-                            style: TextStyle(color: Colors.white,
+                          Text(
+                            "Trending Movies",
+                            style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,),
-                          )
+                              fontSize: 20,
+                            ),
+                          ),
                         ],
                       ),
-                      slidetrending(lsttrending,context),
-                    ]),
-              )
-          );
-        },
-      )
+                      slidetrending(lsttrending, context),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+
+          ),
+        );
+      },
     );
   }
 }

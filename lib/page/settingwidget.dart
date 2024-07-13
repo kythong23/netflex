@@ -43,8 +43,13 @@ class _StateSettingWidget extends State<SettingWidget>{
                   title: const Text('Language'),
                   textColor: notifier.isDark ? Colors.white : Colors.black,
                 ),
+                ListTile(
+                  leading: const Icon(Icons.list),
+                  title: const Text('My list'),
+                  textColor: notifier.isDark ? Colors.white : Colors.black,
+                ),
                 ElevatedButton(onPressed: Loggout
-                    , child: ListTile(
+                  , child: ListTile(
                     leading: const Icon(Icons.logout),
                     title: const Text('Logout'),
                     textColor: notifier.isDark ? Colors.white : Colors.black,

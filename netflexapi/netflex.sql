@@ -20,3 +20,6 @@ alter table Subcription add foreign key (userid) references Users(user_id)
 
 alter table News add foreign key (movieid) references Movie(id)
 alter table News add foreign key (userid) references Users(user_id)
+
+alter table MovieGenre add foreign key (movie_id) references Movie(id)
+alter table MovieGenre add foreign key (genre_id) references Genre(genre_id)
