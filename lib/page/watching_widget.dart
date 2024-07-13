@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:netflex/data/episode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
 class WatchingWidget extends StatefulWidget {
-  final String link;
-  const WatchingWidget({super.key,required this.link});
+  final Episode episode;
+  const WatchingWidget({super.key,required this.episode});
 
   @override
   State<WatchingWidget> createState() => _WatchingWidgetState();
@@ -16,17 +18,20 @@ class _WatchingWidgetState extends State<WatchingWidget> {
   bool _isInitialized = false;
   Duration? _savePosition;
 
-  void _Pausevideo(){
+  void _Pausevideo() async{
+    _savePosition = _videoPlayerController.value.position;
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    await prefs.setInt("Movie ${widget.episode.movieId} ${widget.episode.name}", _savePosition!.inMilliseconds);
     setState(() {
-      _savePosition = _videoPlayerController.value.position;
       _videoPlayerController.pause();
     });
   }
-  @override
-  void initState() {
-    super.initState();
-    if(_savePosition != null ){
-      _videoPlayerController =  VideoPlayerController.networkUrl(Uri.parse(widget.link))
+  Future<void> initializeController()async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    int? videotime = await prefs.getInt("Movie ${widget.episode.movieId} ${widget.episode.name}");
+    if(videotime != null ){
+      _savePosition = Duration(milliseconds: videotime!);
+      _videoPlayerController =  VideoPlayerController.networkUrl(Uri.parse(widget.episode.link!))
         ..initialize().then((_) {
           setState(() {
             _videoPlayerController.seekTo(_savePosition!);
@@ -42,7 +47,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
     }
     else {
       _videoPlayerController =
-      VideoPlayerController.networkUrl(Uri.parse(widget.link))
+      VideoPlayerController.networkUrl(Uri.parse(widget.episode.link!))
         ..initialize().then((_) {
           setState(() {
             _chewieController = ChewieController(
@@ -55,6 +60,11 @@ class _WatchingWidgetState extends State<WatchingWidget> {
           });
         });
     }
+  }
+  @override
+  void initState() {
+    super.initState();
+    initializeController();
   }
   @override
   Widget build(BuildContext context) {
@@ -76,7 +86,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
         height: 350,
         width: 500,
         color: Colors.black,
-        child:(widget.link!=null)?
+        child:(widget.episode.link != null)?
           Container(
           height: 350,
           width: 500,

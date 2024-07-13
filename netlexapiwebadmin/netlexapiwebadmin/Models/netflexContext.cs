@@ -23,6 +23,7 @@ namespace netlexapiwebadmin.Models
         public virtual DbSet<FavorMovie> FavorMovies { get; set; } = null!;
         public virtual DbSet<Genre> Genres { get; set; } = null!;
         public virtual DbSet<Movie> Movies { get; set; } = null!;
+        public virtual DbSet<MovieGenre> MovieGenres { get; set; } = null!;
         public virtual DbSet<News> News { get; set; } = null!;
         public virtual DbSet<Subcription> Subcriptions { get; set; } = null!;
         public virtual DbSet<Subtitle> Subtitles { get; set; } = null!;
@@ -148,23 +149,6 @@ namespace netlexapiwebadmin.Models
                 entity.Property(e => e.GenreName)
                     .HasMaxLength(50)
                     .HasColumnName("genre_name");
-
-                entity.HasMany(d => d.Movies)
-                    .WithMany(p => p.Genres)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "MovieGenre",
-                        l => l.HasOne<Movie>().WithMany().HasForeignKey("MovieId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__MovieGenr__movie__4222D4EF"),
-                        r => r.HasOne<Genre>().WithMany().HasForeignKey("GenreId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__MovieGenr__genre__44FF419A"),
-                        j =>
-                        {
-                            j.HasKey("GenreId", "MovieId").HasName("PK__MovieGen__907E523660322376");
-
-                            j.ToTable("MovieGenre");
-
-                            j.IndexerProperty<int>("GenreId").HasColumnName("genre_id");
-
-                            j.IndexerProperty<int>("MovieId").HasColumnName("movie_id");
-                        });
             });
 
             modelBuilder.Entity<Movie>(entity =>
@@ -225,6 +209,39 @@ namespace netlexapiwebadmin.Models
                     .WithMany(p => p.Movies)
                     .HasForeignKey(d => d.SubtitleId)
                     .HasConstraintName("FK__Movie__subtitle___68487DD7");
+            });
+
+            modelBuilder.Entity<MovieGenre>(entity =>
+            {
+                entity.HasKey(e => e.Mgenreid);
+
+                entity.ToTable("MovieGenre");
+
+                entity.Property(e => e.Mgenreid)
+                    .ValueGeneratedNever()
+                    .HasColumnName("mgenreid");
+
+                entity.Property(e => e.GenreId).HasColumnName("genre_id");
+
+                entity.Property(e => e.MovieId).HasColumnName("movie_id");
+
+                entity.HasOne(d => d.Genre)
+                    .WithMany(p => p.MovieGenreGenres)
+                    .HasForeignKey(d => d.GenreId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__MovieGenr__genre__2BFE89A6");
+
+                entity.HasOne(d => d.Mgenre)
+                    .WithOne(p => p.MovieGenreMgenre)
+                    .HasForeignKey<MovieGenre>(d => d.Mgenreid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__MovieGenr__genre__44FF419A");
+
+                entity.HasOne(d => d.Movie)
+                    .WithMany(p => p.MovieGenres)
+                    .HasForeignKey(d => d.MovieId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__MovieGenr__movie__2B0A656D");
             });
 
             modelBuilder.Entity<News>(entity =>

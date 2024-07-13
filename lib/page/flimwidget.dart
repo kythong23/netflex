@@ -3,6 +3,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:netflex/config/api_service.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/detail_widget.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/provider.dart';
 
 Widget slideposter(BuildContext context) {
   return FutureBuilder<List<Movies>>(
@@ -55,51 +58,53 @@ Widget slidetrending(List<Movies> listPoster,BuildContext context){
         viewportFraction: 0.45,
       ),
       items: listPoster.map((imgposter) =>
-      GestureDetector(
-        onTap:(){
+          GestureDetector(
+            onTap:(){
 
-        },
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          height: 500,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Stack(
-              children: <Widget>[
-                Image.asset(
-                  imgposter.img!,
-                  fit: BoxFit.cover,
-                  height: 500,
+            },
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              height: 500,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                child: Stack(
+                  children: <Widget>[
+                    Image.asset(
+                      imgposter.img!,
+                      fit: BoxFit.cover,
+                      height: 500,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      )
-          ).toList());
+          )
+      ).toList());
 }
 Widget itemListView (Movies movies,BuildContext context){
-  return Container(
-    color: Colors.black,
-    child:
-        InkWell(
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWidget(movies: movies)));
-          },
-          child: Row(
-            children: [
-              Image.network(
-                width: 100,
+  return Consumer<UiProvider>(
+      builder: (context,UiProvider notifier, child){
+        return Container(
+            color: Colors.black12,
+            child:
+            Row(
+              children: [
+                Image.network(
+                  width: 100,
                   height: 100,
-                  movies.img!
-              ),
-              Text(movies.title!,
-                style: TextStyle(
-                  color: Colors.white,
-                ),),
-            ],
-          ),
-        )
-  );
-}
+                  movies.img!,
+                  fit: BoxFit.fitWidth,
+                ),
+                SizedBox(width: 10,),
+                Text(movies.title!,
+                  style: TextStyle(
 
+                    // color: Colors.white,
+                  ),),
+              ],
+            )
+        );
+      }
+  );
+
+}

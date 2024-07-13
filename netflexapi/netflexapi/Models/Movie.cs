@@ -10,8 +10,8 @@ namespace netflexapi.Models
             Actors = new HashSet<Actor>();
             Episodes = new HashSet<Episode>();
             FavorMovies = new HashSet<FavorMovie>();
+            MovieGenres = new HashSet<MovieGenre>();
             News = new HashSet<News>();
-            Genres = new HashSet<Genre>();
         }
 
         public int Id { get; set; }
@@ -36,8 +36,7 @@ namespace netflexapi.Models
         public virtual ICollection<Actor> Actors { get; set; }
         public virtual ICollection<Episode> Episodes { get; set; }
         public virtual ICollection<FavorMovie> FavorMovies { get; set; }
+        public virtual ICollection<MovieGenre> MovieGenres { get; set; }
         public virtual ICollection<News> News { get; set; }
-
-        public virtual ICollection<Genre> Genres { get; set; }
     }
 }

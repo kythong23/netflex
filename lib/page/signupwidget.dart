@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset('assets/images/logo.jpg', width: 200),
+            child: Image.asset('assets/images/logo.png', width: 200),
           ),
           const SizedBox(height: 40),
           TextField(
@@ -144,13 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
               });
             },
           ),
-          // MaterialButton(
-          //   child: const Text(
-          //     "Forgot your password?",
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          //   onPressed: () {},
-          // ),
         ],
       ),
     );
@@ -164,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset('assets/images/logo.jpg', width: 200),
+            child: Image.asset('assets/images/logo.png', width: 200),
           ),
           const SizedBox(height: 40),
           TextField(
