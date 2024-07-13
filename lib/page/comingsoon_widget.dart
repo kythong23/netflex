@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
 
-import '../Services/notifi_service.dart';
+import '../services/notifi_service.dart';
 
 class ComingSoonWidget extends StatefulWidget {
   final String imageUrl;
@@ -83,11 +83,11 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                   Column(
                     children: [
                       IconButton(
-                        onPressed: () {NotificationService().showNotification(
-                          title: 'Neflex',
-                          body: 'Phim hiện đã ra mắt, mới bạn vào xem',
-                        );}
-                        , icon: Icon(
+                          onPressed: () {NotificationService().showNotification(
+                            title: 'Neflex',
+                            body: 'Phim hiện đã ra mắt, mới bạn vào xem',
+                          );}
+                          , icon: Icon(
                         Icons.info_outline_rounded,
                         size: 25,
                         color: Colors.white,
@@ -158,4 +158,3 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
     );
   }
 }
-
