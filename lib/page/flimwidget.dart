@@ -5,6 +5,7 @@ import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/detail_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../data/genres.dart';
 import '../provider/provider.dart';
 
 Widget slideposter(BuildContext context) {
@@ -84,27 +85,44 @@ Widget slidetrending(List<Movies> listPoster,BuildContext context){
 Widget itemListView (Movies movies,BuildContext context){
   return Consumer<UiProvider>(
       builder: (context,UiProvider notifier, child){
-        return Container(
-            color: Colors.black12,
-            child:
-            Row(
-              children: [
-                Image.network(
-                  width: 100,
-                  height: 100,
-                  movies.img!,
-                  fit: BoxFit.fitWidth,
-                ),
-                SizedBox(width: 10,),
-                Text(movies.title!,
-                  style: TextStyle(
+        return InkWell(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWidget(movies: movies)));
+          },
+          child: Container(
+              color: Colors.black12,
+              child:
+              Row(
+                children: [
+                  Image.network(
+                    width: 100,
+                    height: 100,
+                    movies.img!,
+                    fit: BoxFit.fitWidth,
+                  ),
+                  SizedBox(width: 10,),
+                  Text(movies.title!,
+                    style: TextStyle(
 
-                    // color: Colors.white,
-                  ),),
-              ],
-            )
+                      // color: Colors.white,
+                    ),),
+                ],
+              )
+          ),
         );
       }
   );
-
+}
+Widget listGenre (Genre genre,BuildContext context){
+  return Container(
+    padding: EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.white),
+      borderRadius: BorderRadius.circular(16)
+    ),
+    child: Text(genre.genreName!,
+    style: TextStyle(
+      color: Colors.white
+    ),),
+  );
 }

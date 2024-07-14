@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\acer\\Desktop\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj": {}
+    "C:\\Users\\acer\\Desktop\\netflex_clone\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\acer\\Desktop\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj": {
+    "C:\\Users\\acer\\Desktop\\netflex_clone\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\acer\\Desktop\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj",
+        "projectUniqueName": "C:\\Users\\acer\\Desktop\\netflex_clone\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj",
         "projectName": "netflexapi",
-        "projectPath": "C:\\Users\\acer\\Desktop\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj",
+        "projectPath": "C:\\Users\\acer\\Desktop\\netflex_clone\\netflex\\netflexapi\\netflexapi\\netflexapi.csproj",
         "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\acer\\Desktop\\netflex\\netflexapi\\netflexapi\\obj\\",
+        "outputPath": "C:\\Users\\acer\\Desktop\\netflex_clone\\netflex\\netflexapi\\netflexapi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

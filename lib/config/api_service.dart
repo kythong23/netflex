@@ -5,6 +5,8 @@ import 'package:netflex/data/movies.dart';
 import 'package:netflex/data/user.dart';
 import 'package:netflex/data/user_signin.dart';
 
+import '../data/genres.dart';
+
 Future<List<Movies>> fetchMovies() async {
   final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Movies'));
 
@@ -13,6 +15,16 @@ Future<List<Movies>> fetchMovies() async {
     return data.map((json) => Movies.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load Movie');
+  }
+}
+Future<List<Genre>> fetchGenres() async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Genres'));
+
+  if (response.statusCode == 200) {
+    List<dynamic> data = json.decode(response.body);
+    return data.map((json) => Genre.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load Genre');
   }
 }
 Future<List<Episode>> fetchEpisode() async {
