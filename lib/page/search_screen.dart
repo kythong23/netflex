@@ -17,7 +17,7 @@ class SearchScreen extends StatefulWidget{
 
 class _SearchScreenState extends State<SearchScreen> {
   List<Movies> allfilm =[];
-  List<Movies> searchResult = [] ;
+    List<Movies> searchResult = [] ;
   @override
   void initState() {
     allfilm = widget.allfilm;
@@ -69,7 +69,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   const SizedBox(
                     height: 20,
                   ), Container(
-                    // color: Colors.white,
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,

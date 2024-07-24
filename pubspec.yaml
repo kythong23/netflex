@@ -52,6 +52,11 @@ dependencies:
   readmore: ^3.0.0
   google_sign_in: 6.2.1
   flutter_local_notifications: ^17.2.1+1
+  flutter_translate: ^4.1.0
+  translator: ^1.0.0
+  expandable_section: ^0.0.3
+  country_flags: ^3.0.0
+  awesome_dialog: ^3.2.1
 
 dev_dependencies:
   flutter_test:

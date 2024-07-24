@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:netflex/config/api_service.dart';
+import 'package:netflex/data/favormovie.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/detail_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:readmore/readmore.dart';
 
 import '../data/genres.dart';
 import '../provider/provider.dart';
-
 Widget slideposter(BuildContext context) {
   return FutureBuilder<List<Movies>>(
     future: fetchMovies(),
@@ -103,7 +104,6 @@ Widget itemListView (Movies movies,BuildContext context){
                   SizedBox(width: 10,),
                   Text(movies.title!,
                     style: TextStyle(
-
                       // color: Colors.white,
                     ),),
                 ],
@@ -113,16 +113,99 @@ Widget itemListView (Movies movies,BuildContext context){
       }
   );
 }
-Widget listGenre (Genre genre,BuildContext context){
+Widget listGenre (String? name,BuildContext context){
   return Container(
     padding: EdgeInsets.all(8),
     decoration: BoxDecoration(
       border: Border.all(color: Colors.white),
       borderRadius: BorderRadius.circular(16)
     ),
-    child: Text(genre.genreName!,
+    child: Text(name!,
     style: TextStyle(
       color: Colors.white
     ),),
   );
 }
+class ListFavor extends StatefulWidget {
+  final int index;
+  final FavorProvider value;
+  final Movies m;
+  final FavorMovies favorMovies;
+  const ListFavor({super.key,required this.m,required this.value,required this.index,required this.favorMovies});
+
+  @override
+  State<ListFavor> createState() => _ListFavorState();
+}
+
+class _ListFavorState extends State<ListFavor> {
+  bool isCheck=false;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(widget.m.img!,height: 180,width: 120,fit: BoxFit.cover,),
+          Container(
+            margin: EdgeInsets.only(left: 10),
+            constraints: BoxConstraints(
+              maxWidth: 230,
+              maxHeight: 180,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.m.title!,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),),
+                SizedBox(height: 10,),
+                Text(
+                  widget.m.description!,
+                  style: const TextStyle(
+                    // color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Spacer(),
+                Row(
+                  children: [
+                    ElevatedButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWidget(movies: widget.m)));
+                    },
+                      child: Text('Watch Now'),
+                    ),
+                    Spacer(),
+                    Icon(Icons.favorite),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 10,
+            child: Checkbox(
+                value: isCheck,
+                activeColor: Colors.orangeAccent,
+                onChanged: (newValue){
+                  setState(() {
+                    isCheck = newValue!;
+                  });
+                  if(isCheck){
+                    widget.value.addRemove(widget.index,widget.favorMovies);
+                  }
+                  else{
+                    widget.value.minusRemove(widget.index,widget.favorMovies);
+                  }
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

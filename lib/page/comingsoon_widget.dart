@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
 
+import '../config/api_service.dart';
 import '../services/notifi_service.dart';
 
 class ComingSoonWidget extends StatefulWidget {
@@ -25,13 +26,28 @@ class ComingSoonWidget extends StatefulWidget {
 }
 
 class _ComingSoonWidgetState extends State<ComingSoonWidget> {
-
+  String? appbartitle="";
+  late String? _comingOn;
+  late String? _remind;
+  late String? _info;
+  late String? _month;
+  bool translating = true;
+  Future Translate()async{
+    _remind =await translate("Remind me",context);
+    _info =await translate("Info",context);
+    _comingOn =await translate("Coming on",context);
+    _month =await translate(widget.month,context);
+    setState((){
+      translating = !translating;
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
     WidgetsFlutterBinding.ensureInitialized();
     NotificationService().initNotification();
     tz.initializeTimeZones();
+    Translate();
     super.initState();
   }
 
@@ -93,7 +109,7 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                         color: Colors.white,
                       )),
                       Text(
-                        "Remind me",
+                        (!translating)?_remind!:"Loading",
                         style: TextStyle(
                           fontSize: 10,
                           color: Colors.white,
@@ -104,15 +120,16 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                   const SizedBox(
                     width: 20,
                   ),
-                  const Column(
+                   Column(
                     children: [
-                      Icon(
-                        Icons.notifications_none_rounded,
-                        size: 25,
-                        color: Colors.white,
-                      ),
+                      IconButton(onPressed: (){},
+                          icon: Icon(
+                            Icons.notifications_none_rounded,
+                            size: 25,
+                            color: Colors.white,
+                          ),),
                       Text(
-                        "Info",
+                        (!translating)?_info!:"Loading",
                         style: TextStyle(
                           fontSize: 10,
                           color: Colors.white,
@@ -128,13 +145,13 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Coming on ${widget.month} ${widget.day}",
+                  (!translating)?Text(
+                    "$_comingOn $_month ${widget.day}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                     ),
-                  ),
+                  ):Text("Loading"),
                   const SizedBox(
                     height: 10,
                   ),

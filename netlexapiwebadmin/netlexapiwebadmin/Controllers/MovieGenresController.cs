@@ -21,7 +21,7 @@ namespace netlexapiwebadmin.Controllers
         // GET: MovieGenres
         public async Task<IActionResult> Index()
         {
-            var netflexContext = _context.MovieGenres.Include(m => m.Genre).Include(m => m.Mgenre).Include(m => m.Movie);
+            var netflexContext = _context.MovieGenres.Include(m => m.Genre).Include(m => m.Movie);
             return View(await netflexContext.ToListAsync());
         }
 
@@ -35,7 +35,6 @@ namespace netlexapiwebadmin.Controllers
 
             var movieGenre = await _context.MovieGenres
                 .Include(m => m.Genre)
-                .Include(m => m.Mgenre)
                 .Include(m => m.Movie)
                 .FirstOrDefaultAsync(m => m.Mgenreid == id);
             if (movieGenre == null)
@@ -50,7 +49,6 @@ namespace netlexapiwebadmin.Controllers
         public IActionResult Create()
         {
             ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "GenreId");
-            ViewData["Mgenreid"] = new SelectList(_context.Genres, "GenreId", "GenreId");
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
             return View();
         }
@@ -69,7 +67,6 @@ namespace netlexapiwebadmin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "GenreId", movieGenre.GenreId);
-            ViewData["Mgenreid"] = new SelectList(_context.Genres, "GenreId", "GenreId", movieGenre.Mgenreid);
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieGenre.MovieId);
             return View(movieGenre);
         }
@@ -88,7 +85,6 @@ namespace netlexapiwebadmin.Controllers
                 return NotFound();
             }
             ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "GenreId", movieGenre.GenreId);
-            ViewData["Mgenreid"] = new SelectList(_context.Genres, "GenreId", "GenreId", movieGenre.Mgenreid);
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieGenre.MovieId);
             return View(movieGenre);
         }
@@ -126,7 +122,6 @@ namespace netlexapiwebadmin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "GenreId", movieGenre.GenreId);
-            ViewData["Mgenreid"] = new SelectList(_context.Genres, "GenreId", "GenreId", movieGenre.Mgenreid);
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieGenre.MovieId);
             return View(movieGenre);
         }
@@ -141,7 +136,6 @@ namespace netlexapiwebadmin.Controllers
 
             var movieGenre = await _context.MovieGenres
                 .Include(m => m.Genre)
-                .Include(m => m.Mgenre)
                 .Include(m => m.Movie)
                 .FirstOrDefaultAsync(m => m.Mgenreid == id);
             if (movieGenre == null)

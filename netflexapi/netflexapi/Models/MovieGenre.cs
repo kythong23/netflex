@@ -10,7 +10,6 @@ namespace netflexapi.Models
         public int GenreId { get; set; }
 
         public virtual Genre Genre { get; set; } = null!;
-        public virtual Genre Mgenre { get; set; } = null!;
         public virtual Movie Movie { get; set; } = null!;
     }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../config/api_service.dart';
 import '../provider/provider.dart';
 import 'comingsoon_widget.dart';
 
@@ -12,8 +13,27 @@ class NewWidget extends StatefulWidget {
 }
 
 class _NewWidgetState extends State<NewWidget>{
+  String? appbartitle="";
+  late String? _coming;
+  late String? _everywatch;
+  late String? _overview1;
+  late String? _overview2;
+  late String? _overview3;
+  bool translating = true;
+  Future Translate()async{
+    appbartitle =await translate("News",context);
+    _coming =await translate("Coming Soon",context);
+    _everywatch =await translate("Everyone's Watching",context);
+    _overview1 =await translate('When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',context);
+    _overview2 =await translate('A fearless revolutionary and an officer in the British force, who once shared a deep bond, decide to join forces and chart out an inspirational path of freedom against the despotic rulers.',context);
+    _overview3 =await translate('When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',context);
+    setState((){
+      translating = !translating;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+
     return Consumer<UiProvider>(
         builder: (context,UiProvider notifier, child){
           return DefaultTabController(
@@ -22,12 +42,9 @@ class _NewWidgetState extends State<NewWidget>{
                 child: Scaffold(
                     appBar: AppBar(
                       elevation: 0,
-                      // backgroundColor: Colors.black,
-                      title: const Text("News", style: TextStyle(
-                        // color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      ),
+                      title:
+                      (!translating)?Text(appbartitle!, style: TextStyle(
+                        fontWeight: FontWeight.bold,)): Text("Loading"),
                       bottom: TabBar(
                         indicatorPadding: const EdgeInsets.fromLTRB(-10, 0, -10, 0),
                         dividerColor: notifier.isDark ? Colors.black : Colors.black,
@@ -42,17 +59,17 @@ class _NewWidgetState extends State<NewWidget>{
                           fontSize: 14,
                         ),
                         unselectedLabelColor: notifier.isDark ? Colors.white : Colors.black,
-                        tabs: const [
+                        tabs:  [
                           Tab(
-                            text: " 🍿 Coming Soon",
+                            text:(!translating)? " 🍿 ${_coming}":"Loading",
                           ),
                           Tab(
-                            text: "🔥 Everyone's Watching",
+                            text: (!translating)?"🔥 ${_everywatch}":"Loading",
                           )
                         ],
                       ),
                     ),
-                    body: const TabBarView(
+                    body:  TabBarView(
                       children: [
                         SingleChildScrollView(
                           child: Column(
@@ -60,11 +77,10 @@ class _NewWidgetState extends State<NewWidget>{
                               ComingSoonWidget(
                                 imageUrl:
                                 'https://www.pinkvilla.com/images/2022-09/rrr-review.jpg',
-                                overview:
-                                'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',
+                                overview: (!translating)?_overview1!:"Loading",
                                 logoUrl:
                                 "https://s3.amazonaws.com/www-inside-design/uploads/2017/10/strangerthings_feature-983x740.jpg",
-                                month: "Jun",
+                                month: "June",
                                 day: "19",
                               ),
                               SizedBox(
@@ -74,10 +90,10 @@ class _NewWidgetState extends State<NewWidget>{
                                 imageUrl:
                                 'https://www.pinkvilla.com/images/2022-09/rrr-review.jpg',
                                 overview:
-                                'A fearless revolutionary and an officer in the British force, who once shared a deep bond, decide to join forces and chart out an inspirational path of freedom against the despotic rulers.',
+                                (!translating)?_overview2!:"Loading",
                                 logoUrl:
                                 "https://www.careerguide.com/career/wp-content/uploads/2023/10/RRR_full_form-1024x576.jpg",
-                                month: "Mar",
+                                month: "March",
                                 day: "07",
                               ),
                             ],
@@ -90,7 +106,7 @@ class _NewWidgetState extends State<NewWidget>{
                                 imageUrl:
                                 'https://www.pinkvilla.com/images/2022-09/rrr-review.jpg',
                                 overview:
-                                'When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.',
+                                (!translating)?_overview3!:"Loading",
                                 logoUrl:
                                 "https://logowik.com/content/uploads/images/stranger-things4286.jpg",
                                 month: "Feb",
@@ -106,5 +122,10 @@ class _NewWidgetState extends State<NewWidget>{
           );
         }
     );
+  }
+
+  @override
+  void initState() {
+    Translate();
   }
 }

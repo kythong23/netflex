@@ -17,19 +17,43 @@ class DefautlWidget extends StatefulWidget {
 }
 
 class _DefautlWidgetState extends State<DefautlWidget> {
-  List<Movies> getfilm = [];
-  List<Movies> lsttrending = [];
-  bool visibile = false;
-
+  List<Movies> getFilm = [];
+  List<Movies> lstTrending = [];
+  bool visible = false;
+  late String? _genre;
+  late String? _movies;
+  late String? _tvShows;
+  late String? _trending;
+  bool reload= true;
+  bool translating = true;
+  List<String?> _afterTrans= [];
+  Future transLate()async{
+    _genre =await translate("Genre",context);
+    _movies =await translate("Movies",context);
+    _tvShows =await translate("TV Shows",context);
+    _trending =await translate("Trending Movies",context);
+    setState((){
+      translating = !translating;
+    });
+  }
+  Future<List<Movies>> getAllFilm() async {
+    Future<List<Movies>> futureMovies = fetchMovies();
+    getFilm = await futureMovies;
+    return getFilm;
+  }
+  Future transGenre()async{
+    List<Genre> _espisode= await fetchGenres();
+    for(var e in _espisode){
+      _afterTrans.add(await translate(e.genreName!, context));
+    }
+  }
   @override
   void initState() {
-    lsttrending = getFlim(3);
-    Future<List<Movies>> getallflim() async {
-      Future<List<Movies>> futureMovies = fetchMovies();
-      getfilm = await futureMovies;
-      return getfilm;
-    }
-    getallflim();
+    super.initState();
+    lstTrending = getFlim(3);
+    getAllFilm();
+    transLate();
+    transGenre();
   }
 
   @override
@@ -54,7 +78,7 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SearchScreen(allfilm: getfilm)),
+                      MaterialPageRoute(builder: (context) => SearchScreen(allfilm: getFilm)),
                     );
                   },
                 ),
@@ -78,75 +102,69 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                                   child: InkWell(
                                     onTap: (){
                                       setState(() {
-                                        visibile = !visibile;
+                                        visible = !visible;
                                       });
                                     },
                                     child: Container(
+                                      height: 43,
                                       padding: const EdgeInsets.all(10.0),
                                       decoration: BoxDecoration(
                                         color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
                                         border: Border.all(color: Colors.black),
                                         borderRadius: BorderRadius.circular(5.0),
                                       ),
-                                      child: Text(
-                                        "Genre",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,), // Đặt màu chữ
-                                      ),
+                                      child:
+                                      (!translating)?Text(_genre!, textAlign: TextAlign.center,
+                                          style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,)): Text("Loading"),
                                     ),
                                   ),
                                 ),
                               SizedBox(width: 10), // Khoảng cách giữa các container
                               Expanded(
                                 child: Container(
+                                  height: 43,
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
                                     border: Border.all(color: Colors.black),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
-                                  child: Text(
-                                    "Movies",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white), // Đặt màu chữ
-                                  ),
+                                  child:
+                                  (!translating)?Text(_movies!, textAlign: TextAlign.center,
+                                      style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,)): Text("Loading"),
                                 ),
                               ),
                               SizedBox(width: 10), // Khoảng cách giữa các container
                               Expanded(
                                 child: Container(
+                                  height: 43,
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
                                     border: Border.all(color: Colors.black),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
-                                  child: Text(
-                                    "TV Shows",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white), // Đặt màu chữ
-                                  ),
+                                  child: (!translating)?Text(_tvShows!, textAlign: TextAlign.center,
+                                      style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,
+                                      overflow: TextOverflow.ellipsis)): Text("Loading"),
                                 ),
                               ),
                             ],
                           ),
                           slideposter(context),
-                          const Row(
+                           Row(
                             children: [
-                              Text(
-                                "Trending Movies",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
+                              (!translating)?Text(_trending!, textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,)): Text("Loading"),
                             ],
                           ),
-                          slidetrending(lsttrending, context),
+                          slidetrending(lstTrending, context),
                         ],
                       ),
                       Visibility(
-                        visible: visibile,
+                        visible: visible,
                         child: Positioned(
                           top: 45,
                           left: 0,
@@ -168,13 +186,13 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                                       } else if (snapshot.hasError) {
                                         return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
                                       } else {
-                                        List<Genre> listgenre = snapshot.data!;
+                                        List<String?> listgenre = _afterTrans;
                                         return Wrap(
                                           spacing: 10,
                                           runSpacing: 10,
                                           children: [
-                                            for (var genre in listgenre)
-                                              listGenre(genre,this.context),
+                                            for (var genrename in listgenre)
+                                              listGenre(genrename,this.context),
                                           ],
                                         );
                                       }
