@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:netflex/config/api_service.dart';
 import 'package:netflex/data/episode.dart';
@@ -6,8 +8,10 @@ import 'package:netflex/data/movies.dart';
 import 'package:netflex/page/watching_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../data/user.dart';
 import '../provider/provider.dart';
 class DetailWidget extends StatefulWidget {
   final Movies movies;
@@ -22,7 +26,6 @@ class _DetailWidgetState extends State<DetailWidget> {
   late Episode defaultepisode ;
   @override
   Widget build(BuildContext context) {
-    Movies movies = widget.movies;
     return Consumer<UiProvider>(
         builder: (context, UiProvider notifier, child){
           return Scaffold(
@@ -104,13 +107,13 @@ class _DetailWidgetState extends State<DetailWidget> {
                                                       color: notifier.isDark ? Colors.black : Colors.white
                                                   ),
                                                   SizedBox(width: 8), // Khoảng cách giữa icon và text
-                                                  Text(
-                                                    'Play',
+                                                  (!translating)?Text(
+                                                    _play!,
                                                     style: TextStyle(
                                                         fontSize: 20,
                                                         color: notifier.isDark ? Colors.black : Colors.white
                                                     ),
-                                                  ),
+                                                  ):Text("Loading"),
                                                 ],
                                               ),
                                             ),
@@ -122,23 +125,23 @@ class _DetailWidgetState extends State<DetailWidget> {
                                 ),
                               ),
                               const SizedBox(height: 30),
-                              const MovieButtonPage(),
+                              MovieButtonPage(movies: widget.movies,user: user,context: context,),
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      movies.title!,
+                                    (!translating)?Text(
+                                      _title!,
                                       style: const TextStyle(
                                         // color: Colors.white,
                                         fontSize: 35,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                    ),
+                                    ):Text("Loading"),
                                     const SizedBox(height:15),
-                                    ReadMoreText(
-                                      movies.description?? "No description",
+                                    (!translating)?ReadMoreText(
+                                      _desc?? "No description",
                                       style: const TextStyle(
                                         // color: Colors.white,
                                         fontSize: 16,
@@ -149,7 +152,7 @@ class _DetailWidgetState extends State<DetailWidget> {
                                       trimCollapsedText: 'Show more',
                                       trimExpandedText: 'Show less',
                                       moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                                    ),
+                                    ):Text("Loading"),
                                     const SizedBox(height:15),
                                     FutureBuilder(
                                         future: fetchEpisodesByMovieId(widget.movies.id!),
@@ -173,19 +176,19 @@ class _DetailWidgetState extends State<DetailWidget> {
                                   ],
                                 ),
                               ),
-                              const Padding(
+                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Recommended",
+                                    (!translating)?Text(
+                                      _recom!,
                                       style: TextStyle(
                                         // color: Colors.white,
                                         fontSize: 30,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                    ),
+                                    ):Text("Loading"),
                                   ],
                                 ),
                               ),
@@ -238,10 +241,33 @@ class _DetailWidgetState extends State<DetailWidget> {
         ),
       ),);
   }
-
+  late Movies m ;
+  late String? _play;
+  late String? _title;
+  late String? _desc;
+  late String? _recom;
+  bool reload= true;
+  bool translating = true;
+  User user = new User();
+  Future Translate()async{
+    _play =await translate("Play",context);
+    _title =await translate(m.title!,context);
+    _desc =await translate(m.description!,context);
+    _recom =await translate("Recommended",context);
+    setState((){
+      translating = !translating;
+    });
+  }
+  Future getUser()async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    user = User.fromJson(jsonDecode(pref.getString('user')!));
+  }
   @override
   void initState() {
     super.initState();
+    getUser();
+    m = widget.movies;
+    Translate();
     if(widget.movies.trailer != null ){
       final videoid = YoutubePlayer.convertUrlToId(widget.movies.trailer!);
       _controller = YoutubePlayerController(initialVideoId: videoid!,

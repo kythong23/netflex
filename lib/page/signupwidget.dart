@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../config/const.dart';
+import '../provider/provider.dart';
 import 'home.dart';
 import '../api/google_signin_api.dart';
 import '../data/user.dart';
@@ -26,11 +29,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   int _selectedIndex = 0;
 
-
+ void updateFavorProvider(User user){
+   Provider.of<FavorProvider>(context, listen: false).userId = user.userId;
+   Provider.of<FavorProvider>(context, listen: false).getFavorAndMoviesList();
+ }
  void checkLogged() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
     String strUser = pref.getString('user')!;
     if(strUser != null){
+      User user = User.fromJson(jsonDecode(pref.getString('user')!));
+      updateFavorProvider(user);
       Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => MyHome()));
@@ -278,11 +286,12 @@ class _LoginScreenState extends State<LoginScreen> {
     User? user = await fetchUserByEmail(email);
     if(user != null){
       saveUser(user);
+      updateFavorProvider(user);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => MyHome()));
     }else{
-      ShowDialog('Something wrong');
+      ShowDialog('Something wrong',context);
     }
   }
 
@@ -304,7 +313,7 @@ class _LoginScreenState extends State<LoginScreen> {
       user.password = _passwordController.text;
 
       if (user.email!.isEmpty || user.password!.isEmpty) {
-        ShowDialog('Please enter your email and password');
+        ShowDialog('Please enter your email and password',context);
         return;
       }
 
@@ -312,7 +321,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if(success) {
         await SignIn(user.email);
       }else{
-        ShowDialog('Email or password is incorrect');
+        ShowDialog('Email or password is incorrect',context);
       }
   }
   Future signInGoogle() async{
@@ -351,37 +360,24 @@ class _LoginScreenState extends State<LoginScreen> {
       if(success){
         SignIn(user.email);
       }else{
-        ShowDialog('Something wrong');
+        ShowDialog('Something wrong',context);
       }
     }
   }
   Future<bool> validateUser(User user) async{
     if (user.username!.isEmpty) {
-      ShowDialog('Please enter your user name!');
+      ShowDialog('Please enter your user name!',context);
       return false;
     }
     if (user.email!.isEmpty || user.password!.isEmpty) {
-      ShowDialog('Please enter your email and password!');
+      ShowDialog('Please enter your email and password!',context);
       return false;
     }
     bool userExists = await checkEmail(_emailController.text);
     if(userExists) {
-      ShowDialog('This email is used.');
+      ShowDialog('This email is used.',context);
       return false;
     }
     return true;
-  }
-  void ShowDialog(String text)
-  {
-    showDialog(context: context, builder: (_) => AlertDialog(
-      title: const Text('Error'),
-      content: Text(text),
-      actions: [
-        TextButton(
-          child: const Text('OK'),
-          onPressed: () =>  Navigator.of(context, rootNavigator: true).pop('dialog'),
-        )
-      ],
-    ));
   }
 }

@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:netflex/data/episode.dart';
+import 'package:netflex/data/favormovie.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/data/user.dart';
 import 'package:netflex/data/user_signin.dart';
-
+import 'package:netflex/provider/provider.dart';
+import 'package:provider/provider.dart';
+import '../api/google_signin_api.dart';
 import '../data/genres.dart';
 
 Future<List<Movies>> fetchMovies() async {
@@ -16,6 +20,11 @@ Future<List<Movies>> fetchMovies() async {
   } else {
     throw Exception('Failed to load Movie');
   }
+}
+Future<Movies> fetchMoviesById(int id) async {
+  List<Movies> allMovies = await fetchMovies();
+  Movies moviesById = allMovies.firstWhere((element) => element.id == id);
+  return moviesById;
 }
 Future<List<Genre>> fetchGenres() async {
   final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Genres'));
@@ -84,7 +93,35 @@ Future<bool> checkUser(UserSignIn user) async {
     return false;
   }
 }
+Future<bool> addFavor(FavorMovies favorMovies) async{
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:5042/api/FavorMovies'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(favorMovies.toJson()),
+  );
+  if (response.statusCode == 201) {
+    return true;
+  } else {
+    return false;
+  }
+}
+Future<List<FavorMovies>> fetchFavor() async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/FavorMovies'));
 
+  if (response.statusCode == 200) {
+    List<dynamic> data = json.decode(response.body);
+    return data.map((json) => FavorMovies.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load FavorMovies');
+  }
+}
+Future<List<FavorMovies>> fetchFavorByUserId(int id) async {
+  List<FavorMovies> allFavors = await fetchFavor();
+  List<FavorMovies> favorByUser = allFavors.where((e) => e.userId == id).toList();
+  return favorByUser;
+}
 Future<User?> fetchUserByEmail(String email) async {
   final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Users/signin/$email'));
 
@@ -94,4 +131,20 @@ Future<User?> fetchUserByEmail(String email) async {
   } else {
     return null;
   }
+}
+Future<bool> deleteFavorMovie(int? id) async {
+  final response = await http.delete(
+    Uri.parse('http://10.0.2.2:5042/api/FavorMovies/$id'),
+  );
+
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
+}
+Future<String?> translate(String text,BuildContext context)async{
+  String? lang = Provider.of<LanguageProvider>(context, listen: false).lang;
+  var t =  await GoogleTrans.translator.translate(text, to: lang!);
+  return t.toString();
 }

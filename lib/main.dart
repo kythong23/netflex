@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflex/page/settingwidget.dart';
 import 'package:netflex/provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'page/flash_screen.dart';
@@ -13,28 +14,39 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context)=>UiProvider()..init(),
-      child: Consumer<UiProvider>(
-          builder: (context, UiProvider notifier, child) {
-            return MaterialApp(
-              title: 'Flutter Demo',
-              //By default theme setting, you can also set system
-              // when your mobile theme is dark the app also become dark
-
-              themeMode: notifier.isDark? ThemeMode.dark : ThemeMode.light,
-
-              //Our custom theme applied
-              darkTheme: notifier.isDark? notifier.darkTheme : notifier.lightTheme,
-
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-                useMaterial3: true,
-              ),
-              home:  FlashScreen(),
-            );
-          }
-      ),
+    return MultiProvider(
+        providers:[
+          ChangeNotifierProvider(
+          create: (BuildContext context)=>UiProvider()..init(),
+            ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=>LanguageProvider()..init(),
+          ),
+          ChangeNotifierProvider(
+            create: (BuildContext context)=>FavorProvider(),
+          ),
+        ],
+    child: Consumer<UiProvider>(
+        builder: (context,UiProvider notifier, child){
+          return MaterialApp(
+            title: 'Flutter Demo',
+            //By default theme setting, you can also set system
+            // when your mobile theme is dark the app also become dark
+            themeMode: notifier.isDark? ThemeMode.dark : ThemeMode.light,
+            //Our custom theme applied
+            darkTheme: notifier.isDark? notifier.darkTheme : notifier.lightTheme,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            initialRoute: "/",
+            routes: {
+              "/":(context)=>FlashScreen(),
+              "/settingWidget":(context)=>SettingWidget()
+            },
+            // home:  FlashScreen(),
+          );
+        })
     );
   }
 }

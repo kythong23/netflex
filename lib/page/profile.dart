@@ -9,11 +9,11 @@ import 'package:netflex/page/settingwidget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config/api_service.dart';
 import '../data/user.dart';
 import '../provider/provider.dart';
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
-
   @override
   State<MyProfile> createState() => _MyProfileState();
 }
@@ -22,12 +22,30 @@ class _MyProfileState extends State<MyProfile> {
   List<Movies> lstposter = [];
   List<Movies> lsttrending = [];
   late Future<User> futureUser;
+  String? appbartitle="";
+  late String? manageprofile;
+  late String? trailer;
+  late String? continuewatch;
+  bool reload= true;
+  bool translating = true;
+  Future transLate()async{
+    appbartitle =await translate("My profile",context);
+    manageprofile =await translate("Manage Profile",context);
+    trailer =await translate("Trailers You've Watched",context);
+    continuewatch =await translate("Continue Watching",context);
+    setState((){
+      translating = !translating;
+    });
+  }
+
+
   @override
   void initState() {
     super.initState();
     lstposter = getFlim(3);
     lsttrending = getFlim(3);
     futureUser = getUser();
+    transLate();
   }
   Future<User> getUser()async{
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -41,14 +59,18 @@ class _MyProfileState extends State<MyProfile> {
           return  Scaffold(
             // backgroundColor: const Color.fromARGB(26, 26, 26, 100),
             appBar: AppBar(
-              title: const Text("My profile", style: TextStyle(fontWeight: FontWeight.bold)),
+              title: (!translating)?Text(appbartitle!, style: TextStyle(fontWeight: FontWeight.bold)): Text("Loading"),
               // backgroundColor: Colors.black,
               actions: [
-                IconButton(onPressed: (){
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=> SettingWidget()));
+                IconButton(onPressed: ()async{
+                  await Navigator.push(context, MaterialPageRoute(builder: (context)
+                  =>SettingWidget()));
+                  setState(() {
+                    translating = !translating;
+                  });
+                  transLate();
                 }, icon: const Icon(Icons.menu)),
                 IconButton(onPressed: (){
-
                 }, icon: const Icon(Icons.search))
               ],
             ),
@@ -96,35 +118,27 @@ class _MyProfileState extends State<MyProfile> {
                           ],
                         ),
                         const SizedBox(height: 10,),
-                        const Row(
+                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.note_alt,
-                              // color: Colors.white,
-                            ),
-                            Text("Manage Profile",
-                                style: TextStyle(
-                                  // color: Colors.white
-                                )
-                            )
+                            Icon(Icons.note_alt),
+                            (!translating)?Text(manageprofile!): Text("Loading"),
                           ],
                         ),
                         const SizedBox(height: 25,),
-                        const Row(
+                         Row(
                           children: [
-                            Text("Trailers You've Watched",
+                            (!translating)?Text(trailer!,
                                 style: TextStyle(
-                                  // color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
+                                    fontWeight: FontWeight.bold)): Text("Loading"),
                           ],
                         ),
                         slidetrending(lsttrending,context),
-                        const Row(
+                         Row(
                           children: [
-                            Text("Continue Watching",
+                            (!translating)?Text(continuewatch!,
                                 style: TextStyle(
-                                  // color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
+                                    fontWeight: FontWeight.bold)): Text("Loading"),
                           ],
                         ),
                         slidetrending(lsttrending,context),

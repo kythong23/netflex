@@ -1,7 +1,7 @@
 class Genre {
   int? genreId;
   String? genreName;
-  Null? movieGenreMgenre;
+  Null movieGenreMgenre;
   List<Null>? movieGenreGenres;
 
   Genre(

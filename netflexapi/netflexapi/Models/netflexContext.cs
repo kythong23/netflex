@@ -95,9 +95,7 @@ namespace netflexapi.Models
             {
                 entity.ToTable("Episode");
 
-                entity.Property(e => e.EpisodeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("episode_id");
+                entity.Property(e => e.EpisodeId).HasColumnName("episode_id");
 
                 entity.Property(e => e.Link)
                     .HasMaxLength(200)
@@ -121,9 +119,7 @@ namespace netflexapi.Models
 
                 entity.ToTable("FavorMovie");
 
-                entity.Property(e => e.FavorId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("FavorID");
+                entity.Property(e => e.FavorId).HasColumnName("FavorID");
 
                 entity.Property(e => e.MovieId).HasColumnName("MovieID");
 
@@ -155,9 +151,7 @@ namespace netflexapi.Models
             {
                 entity.ToTable("Movie");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.AgeLimit).HasColumnName("age_limit");
 
@@ -226,16 +220,10 @@ namespace netflexapi.Models
                 entity.Property(e => e.MovieId).HasColumnName("movie_id");
 
                 entity.HasOne(d => d.Genre)
-                    .WithMany(p => p.MovieGenreGenres)
+                    .WithMany(p => p.MovieGenres)
                     .HasForeignKey(d => d.GenreId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__MovieGenr__genre__2BFE89A6");
-
-                entity.HasOne(d => d.Mgenre)
-                    .WithOne(p => p.MovieGenreMgenre)
-                    .HasForeignKey<MovieGenre>(d => d.Mgenreid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MovieGenr__genre__44FF419A");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.MovieGenres)

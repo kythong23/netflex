@@ -7,13 +7,12 @@ namespace netlexapiwebadmin.Models
     {
         public Genre()
         {
-            MovieGenreGenres = new HashSet<MovieGenre>();
+            MovieGenres = new HashSet<MovieGenre>();
         }
 
         public int GenreId { get; set; }
         public string? GenreName { get; set; }
 
-        public virtual MovieGenre? MovieGenreMgenre { get; set; }
-        public virtual ICollection<MovieGenre> MovieGenreGenres { get; set; }
+        public virtual ICollection<MovieGenre> MovieGenres { get; set; }
     }
 }

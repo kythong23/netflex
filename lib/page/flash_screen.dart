@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
-import 'package:netflex/page/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:provider/provider.dart';
 
-import '../data/data.dart';
+import '../provider/provider.dart';
 import './signupwidget.dart';
 
 class FlashScreen extends StatefulWidget {
@@ -19,6 +17,7 @@ class _FlashScreenState extends State<FlashScreen>
   @override
   void initState() {
     super.initState();
+    Provider.of<LanguageProvider>(context, listen: false).init();
     Future.delayed(const Duration(seconds:2),() {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_)=> LoginScreen(),

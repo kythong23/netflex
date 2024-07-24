@@ -31,6 +31,7 @@ namespace netflexapi.Controllers
             return await _context.FavorMovies.ToListAsync();
         }
 
+
         // GET: api/FavorMovies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<FavorMovie>> GetFavorMovie(int id)
