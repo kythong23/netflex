@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:netflex/page/flimwidget.dart';
 import 'package:provider/provider.dart';
 
+import '../config/api_service.dart';
 import '../data/data.dart';
 import '../data/movies.dart';
 import '../provider/provider.dart';
@@ -18,9 +19,18 @@ class SearchScreen extends StatefulWidget{
 class _SearchScreenState extends State<SearchScreen> {
   List<Movies> allfilm =[];
     List<Movies> searchResult = [] ;
+  String? appbartitle="";
+  bool translating = true;
+  Future transLate()async{
+    appbartitle =await translate("Search for a movie",context);
+    setState((){
+      translating = !translating;
+    });
+  }
   @override
   void initState() {
     allfilm = widget.allfilm;
+    transLate();
   }
   @override
   Widget build(BuildContext context) {
@@ -31,10 +41,8 @@ class _SearchScreenState extends State<SearchScreen> {
             // backgroundColor: Colors.black,
             elevation: 0.0,
             iconTheme: const IconThemeData(),
-            title: const Text("Search for a movie", style: TextStyle(
-              fontWeight: FontWeight.bold,
-            )
-            ),
+              title: (!translating)?Text(appbartitle!, style: TextStyle(fontWeight: FontWeight.bold)): Text("Loading"),
+
           ),
           body:
           Padding(

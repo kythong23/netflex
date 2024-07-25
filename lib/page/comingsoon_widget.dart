@@ -66,7 +66,7 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                 widget.month,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  // color: Colors.white,
                 ),
               ),
               Text(
@@ -74,7 +74,7 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
-                  color: Colors.white,
+                  // color: Colors.white,
                   letterSpacing: 5,
                 ),
               )
@@ -96,6 +96,9 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                       alignment: Alignment.centerLeft,
                     ),
                   ),
+                  const SizedBox(
+                    width: 20,
+                  ),
                   Column(
                     children: [
                       IconButton(
@@ -106,13 +109,13 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                           , icon: Icon(
                         Icons.info_outline_rounded,
                         size: 25,
-                        color: Colors.white,
+                        // color: Colors.white,
                       )),
                       Text(
                         (!translating)?_remind!:"Loading",
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.white,
+                          // color: Colors.white,
                         ),
                       )
                     ],
@@ -126,13 +129,13 @@ class _ComingSoonWidgetState extends State<ComingSoonWidget> {
                           icon: Icon(
                             Icons.notifications_none_rounded,
                             size: 25,
-                            color: Colors.white,
+                            // color: Colors.white,
                           ),),
                       Text(
                         (!translating)?_info!:"Loading",
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.white,
+                          // color: Colors.white,
                         ),
                       )
                     ],

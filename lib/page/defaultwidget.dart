@@ -62,6 +62,7 @@ class _DefautlWidgetState extends State<DefautlWidget> {
       builder: (context, UiProvider notifier, child) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Row(
               children: [
                 Padding(
@@ -109,13 +110,13 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                                       height: 43,
                                       padding: const EdgeInsets.all(10.0),
                                       decoration: BoxDecoration(
-                                        color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
-                                        border: Border.all(color: Colors.black),
+                                        color: notifier.isDark ? Colors.black : Colors.redAccent, // Đặt màu nền
+                                        border: Border.all(color: Colors.white),
                                         borderRadius: BorderRadius.circular(5.0),
                                       ),
                                       child:
                                       (!translating)?Text(_genre!, textAlign: TextAlign.center,
-                                          style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,)): Text("Loading"),
+                                          style: TextStyle(color: notifier.isDark ? Colors.white : Colors.white,)): Text("Loading"),
                                     ),
                                   ),
                                 ),
@@ -125,13 +126,13 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                                   height: 43,
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
-                                    border: Border.all(color: Colors.black),
+                                    color: notifier.isDark ? Colors.black : Colors.redAccent, // Đặt màu nền
+                                    border: Border.all(color: Colors.white),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   child:
                                   (!translating)?Text(_movies!, textAlign: TextAlign.center,
-                                      style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,)): Text("Loading"),
+                                      style: TextStyle(color: notifier.isDark ? Colors.white : Colors.white,)): Text("Loading"),
                                 ),
                               ),
                               SizedBox(width: 10), // Khoảng cách giữa các container
@@ -140,12 +141,12 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                                   height: 43,
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
-                                    border: Border.all(color: Colors.black),
+                                    color: notifier.isDark ? Colors.black: Colors.redAccent, // Đặt màu nền
+                                    border: Border.all(color: Colors.white),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   child: (!translating)?Text(_tvShows!, textAlign: TextAlign.center,
-                                      style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,
+                                      style: TextStyle(color: notifier.isDark ? Colors.white : Colors.white,
                                       overflow: TextOverflow.ellipsis)): Text("Loading"),
                                 ),
                               ),

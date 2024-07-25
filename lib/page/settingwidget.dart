@@ -88,7 +88,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black12,
+                                      // color: Colors.black12,
                                     ),
                                     width: MediaQuery.of(context).size.width,
                                     margin: const EdgeInsets.only(bottom: 10),
@@ -103,7 +103,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                           ),
                                         ),
                                         SizedBox(width: 10,),
-                                        Text("Anh",style: TextStyle(fontStyle: FontStyle.italic),),
+                                        Text("Anh",style: TextStyle(fontSize: 14),),
                                       ],
                                     ),
                                   ),
@@ -122,7 +122,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black12,
+                                      // color: Colors.black12,
                                     ),
                                     width: MediaQuery.of(context).size.width,
                                     margin: const EdgeInsets.only(bottom: 10),
@@ -137,7 +137,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                           ),
                                         ),
                                         SizedBox(width: 10,),
-                                        Text("Pháp",style: TextStyle(fontStyle: FontStyle.italic),),
+                                        Text("Pháp",style: TextStyle(fontSize: 14),),
                                       ],
                                     ),
                                   ),
@@ -156,7 +156,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black12,
+                                      // color: Colors.black12,
                                     ),
                                     width: MediaQuery.of(context).size.width,
                                     margin: const EdgeInsets.only(bottom: 10),
@@ -171,7 +171,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                           ),
                                         ),
                                         SizedBox(width: 10,),
-                                        Text("Ả rập",style: TextStyle(fontStyle: FontStyle.italic),),
+                                        Text("Ả rập",style: TextStyle(fontSize: 14),),
                                       ],
                                     ),
                                   ),
@@ -190,7 +190,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black12,
+                                      // color: Colors.black12,
                                     ),
                                     width: MediaQuery.of(context).size.width,
                                     margin: const EdgeInsets.only(bottom: 10),
@@ -205,7 +205,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                           ),
                                         ),
                                         SizedBox(width: 10,),
-                                        Text("Việt nam",style: TextStyle(fontStyle: FontStyle.italic),),
+                                        Text("Việt nam",style: TextStyle(fontSize: 14),),
                                       ],
                                     ),
                                   ),
@@ -224,7 +224,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black12,
+                                      // color: Colors.black12,
                                     ),
                                     width: MediaQuery.of(context).size.width,
                                     margin: const EdgeInsets.only(bottom: 10),
@@ -239,7 +239,7 @@ class _StateSettingWidget extends State<SettingWidget>{
                                           ),
                                         ),
                                         SizedBox(width: 10,),
-                                        Text("Đức",style: TextStyle(fontStyle: FontStyle.italic),),
+                                        Text("Đức",style: TextStyle(fontSize: 14),),
                                       ],
                                     ),
                                   ),

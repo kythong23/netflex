@@ -51,14 +51,6 @@ class _DetailWidgetState extends State<DetailWidget> {
                                         size: 30,
                                       ),
                                     ),
-                                    InkWell(
-                                      onTap: (){},
-                                      child: const Icon(
-                                        Icons.favorite_border,
-                                        // color: Colors.white,
-                                        size: 35,
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -164,7 +156,8 @@ class _DetailWidgetState extends State<DetailWidget> {
                                           } else {
                                             List<Episode> listepisode = snapshot.data!;
                                             return Wrap(
-                                              spacing: 10,
+                                              spacing: 50,
+                                              runSpacing: 10,
                                               children: [
                                                 for (var episode in listepisode)
                                                   listEpisode(episode,this.context,listepisode),
@@ -229,7 +222,7 @@ class _DetailWidgetState extends State<DetailWidget> {
     if(episode.name! == "Tập 1"){
       defaultepisode = episode;
     };
-    return ElevatedButton(onPressed: (){
+    return listepisode.length ==1 ? ElevatedButton(onPressed: (){
       Navigator.push(context, MaterialPageRoute
         (builder: (context)=>WatchingWidget(episode: episode,)));
     },
@@ -237,9 +230,23 @@ class _DetailWidgetState extends State<DetailWidget> {
         episode.name!,
         style:
         const TextStyle(
-          color: Colors.white,
+          // color: Colors.white,
         ),
-      ),);
+      )): SizedBox(
+      width: 100,
+        child : ElevatedButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute
+            (builder: (context)=>WatchingWidget(episode: episode,)));
+        },
+            child: Text(
+              episode.name!,
+              style:
+              const TextStyle(
+                // color: Colors.white,
+              ),
+            ))
+    );
+
   }
   late Movies m ;
   late String? _play;

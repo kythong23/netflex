@@ -1,0 +1,102 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\neflex25.7\\netflex\\netflexapi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|d:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|solutionrelative:netflexapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|d:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|solutionrelative:netflexapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|d:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\controllers\\favormoviescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|solutionrelative:netflexapi\\controllers\\favormoviescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|d:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\models\\netflexcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|solutionrelative:netflexapi\\models\\netflexcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|d:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\controllers\\moviegenrescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9719D93-3193-40EC-B7F7-23BD84AF9351}|netflexapi\\netflexapi.csproj|solutionrelative:netflexapi\\controllers\\moviegenrescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\appsettings.json",
+              "RelativeDocumentMoniker": "netflexapi\\appsettings.json",
+              "ToolTip": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\appsettings.json",
+              "RelativeToolTip": "netflexapi\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-25T12:38:42.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Program.cs",
+              "RelativeDocumentMoniker": "netflexapi\\Program.cs",
+              "ToolTip": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Program.cs",
+              "RelativeToolTip": "netflexapi\\Program.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T12:38:27.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FavorMoviesController.cs",
+              "DocumentMoniker": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Controllers\\FavorMoviesController.cs",
+              "RelativeDocumentMoniker": "netflexapi\\Controllers\\FavorMoviesController.cs",
+              "ToolTip": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Controllers\\FavorMoviesController.cs",
+              "RelativeToolTip": "netflexapi\\Controllers\\FavorMoviesController.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAAACAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T12:38:27.495Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "netflexContext.cs",
+              "DocumentMoniker": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Models\\netflexContext.cs",
+              "RelativeDocumentMoniker": "netflexapi\\Models\\netflexContext.cs",
+              "ToolTip": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Models\\netflexContext.cs",
+              "RelativeToolTip": "netflexapi\\Models\\netflexContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T12:38:27.498Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MovieGenresController.cs",
+              "DocumentMoniker": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Controllers\\MovieGenresController.cs",
+              "RelativeDocumentMoniker": "netflexapi\\Controllers\\MovieGenresController.cs",
+              "ToolTip": "D:\\neflex25.7\\netflex\\netflexapi\\netflexapi\\Controllers\\MovieGenresController.cs",
+              "RelativeToolTip": "netflexapi\\Controllers\\MovieGenresController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-25T12:38:27.5Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

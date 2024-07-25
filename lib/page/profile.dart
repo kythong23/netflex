@@ -70,8 +70,6 @@ class _MyProfileState extends State<MyProfile> {
                   });
                   transLate();
                 }, icon: const Icon(Icons.menu)),
-                IconButton(onPressed: (){
-                }, icon: const Icon(Icons.search))
               ],
             ),
             body:  Stack(
@@ -130,7 +128,7 @@ class _MyProfileState extends State<MyProfile> {
                           children: [
                             (!translating)?Text(trailer!,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold)): Text("Loading"),
+                                    fontWeight: FontWeight.bold,fontSize: 20)): Text("Loading"),
                           ],
                         ),
                         slidetrending(lsttrending,context),
@@ -138,7 +136,8 @@ class _MyProfileState extends State<MyProfile> {
                           children: [
                             (!translating)?Text(continuewatch!,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold)): Text("Loading"),
+                                    fontWeight: FontWeight.bold,fontSize: 20),
+                            ): Text("Loading"),
                           ],
                         ),
                         slidetrending(lsttrending,context),

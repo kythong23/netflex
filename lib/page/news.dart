@@ -51,7 +51,7 @@ class _NewWidgetState extends State<NewWidget>{
                         isScrollable: false,
                         indicator: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: notifier.isDark ? Colors.white : Colors.red,
+                          color: notifier.isDark ? Colors.white : Colors.redAccent,
                         ),
                         labelColor: notifier.isDark ? Colors.black : Colors.white,
                         labelStyle: const TextStyle(
