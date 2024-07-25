@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:netflex/page/home.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/provider.dart';
