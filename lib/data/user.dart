@@ -1,3 +1,5 @@
+import './Subcription.dart';
+
 class User {
   int? userId;
   String? username;
@@ -5,6 +7,9 @@ class User {
   String? email;
   String? role;
   String? status;
+  int? subcriptionId;
+  String? expiredDate;
+  Subcription? subcription;
 
   User(
       {this.userId,
@@ -12,7 +17,10 @@ class User {
         this.password,
         this.email,
         this.role,
-        this.status});
+        this.status,
+        this.subcriptionId,
+        this.expiredDate,
+        this.subcription});
 
   User.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -21,6 +29,11 @@ class User {
     email = json['email'];
     role = json['role'];
     status = json['status'];
+    subcriptionId = json['subcriptionId'];
+    expiredDate = json['expiredDate'];
+    subcription = json['subcription'] != null
+        ? new Subcription.fromJson(json['subcription'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +44,11 @@ class User {
     data['email'] = this.email;
     data['role'] = this.role;
     data['status'] = this.status;
+    data['subcriptionId'] = this.subcriptionId;
+    data['expiredDate'] = this.expiredDate;
+    if (this.subcription != null) {
+      data['subcription'] = this.subcription!.toJson();
+    }
     return data;
   }
 }
