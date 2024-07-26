@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:netflex/config/api_service.dart';
 import 'package:netflex/data/data.dart';
 import 'package:netflex/data/movies.dart';
@@ -17,20 +18,16 @@ class DefautlWidget extends StatefulWidget {
 }
 
 class _DefautlWidgetState extends State<DefautlWidget> {
+  int selectedIndex= -1;
   List<Movies> getFilm = [];
   List<Movies> lstTrending = [];
   bool visible = false;
-  late String? _genre;
-  late String? _movies;
-  late String? _tvShows;
+  late Future<String?> t;
   late String? _trending;
+  List<Genre> genreList = [];
   bool reload= true;
   bool translating = true;
-  List<String?> _afterTrans= [];
   Future transLate()async{
-    _genre =await translate("Genre",context);
-    _movies =await translate("Movies",context);
-    _tvShows =await translate("TV Shows",context);
     _trending =await translate("Trending Movies",context);
     setState((){
       translating = !translating;
@@ -41,12 +38,21 @@ class _DefautlWidgetState extends State<DefautlWidget> {
     getFilm = await futureMovies;
     return getFilm;
   }
+  Future addGenre(Genre e,List<Genre> list,Future<String?> t)async{
+    list.add(Genre(
+      genreId: e.genreId,
+      genreName:await t,
+    ));
+  }
   Future transGenre()async{
     List<Genre> genre= await fetchGenres();
+    List<Genre>afterTrans=[];
     for(int i = 0; i <=2; i++){
       Genre e = genre[i];
-      _afterTrans.add(await translate(e.genreName!, context));
+      t = translate(e.genreName!,context);
+      await addGenre(e,afterTrans,t);
     }
+    genreList = afterTrans;
   }
   @override
   void initState() {
@@ -87,7 +93,7 @@ class _DefautlWidgetState extends State<DefautlWidget> {
               ],
             ),
           ),
-          body: Stack(
+          body:Stack(
             children: [
               SingleChildScrollView(
                 child: Padding(
@@ -100,14 +106,14 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               FutureBuilder(
-                                  future: fetchGenres(),
+                                  future: transGenre(),
                                   builder: (context,snapshot){
                                     if (snapshot.connectionState == ConnectionState.waiting) {
                                       return const CircularProgressIndicator(); // Hiển thị tiến trình chờ
                                     } else if (snapshot.hasError) {
                                       return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
                                     } else {
-                                      List<String?> listgenre = _afterTrans;
+                                      List<Genre> listgenre =genreList;
                                       return Wrap(
                                         spacing: 10,
                                         runSpacing: 10,
@@ -120,81 +126,122 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                                   }),
                             ],
                           ),
-                          slideposter(context),
-                          Row(
-                            children: [
-                              (!translating)?Text(_trending!, textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,)): Text("Loading"),
-                            ],
-                          ),
-                          slidetrending(lstTrending, context),
-                        ],
-                      ),
-                      Visibility(
-                        visible: visible,
-                        child: Positioned(
-                          top: 45,
-                          left: 0,
-                          right: 0,
-                          child: Wrap(
+                          (selectedIndex==-1)?Column(
+                            children:[
+                              slideposter(context),
+                              Row(
+                                children: [
+                                  (!translating)?Text(_trending!, textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,)): Text("Loading"),
+                                ],
+                              ),
+                              slidetrending(lstTrending, context),
+                            ]
+                          ):
+                          Column(
                             children: [
                               Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(16),bottomLeft: Radius.circular(16)),
-                                  color: Colors.black,
-                                ),
-                                padding: EdgeInsets.only(top: 16, left: 10, right: 6, bottom: 16),
-                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height*0.75,
                                 child: FutureBuilder(
-                                    future: fetchGenres(),
+                                    future: fetchMoviesByGenre(selectedIndex),
                                     builder: (context,snapshot){
                                       if (snapshot.connectionState == ConnectionState.waiting) {
                                         return const CircularProgressIndicator(); // Hiển thị tiến trình chờ
                                       } else if (snapshot.hasError) {
                                         return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
                                       } else {
-                                        List<String?> listgenre = _afterTrans;
-                                        return Wrap(
-                                          spacing: 10,
-                                          runSpacing: 10,
-                                          children: [
-                                            for (var genrename in listgenre)
-                                              listGenre(genrename,this.context),
-                                          ],
-                                        );
+                                        return  ListView.builder(
+                                            itemCount: snapshot.data!.length,
+                                            itemBuilder: (context,index){
+                                              return ListMovieByGenre(movieId: snapshot.data![index].movieId,);
+                                            });
                                       }
                                     }),
                               ),
-                            ],),
-                        ),
-                      )],
+                            ],
+                          ),
+                        ],
+                      ),
+                      // Visibility(
+                      //   visible: visible,
+                      //   child: Positioned(
+                      //     top: 45,
+                      //     left: 0,
+                      //     right: 0,
+                      //     child: Wrap(
+                      //       children: [
+                      //         Container(
+                      //           decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.only(bottomRight: Radius.circular(16),bottomLeft: Radius.circular(16)),
+                      //             color: Colors.black,
+                      //           ),
+                      //           padding: EdgeInsets.only(top: 16, left: 10, right: 6, bottom: 16),
+                      //           width: MediaQuery.of(context).size.width,
+                      //           child: FutureBuilder(
+                      //               future: fetchGenres(),
+                      //               builder: (context,snapshot){
+                      //                 if (snapshot.connectionState == ConnectionState.waiting) {
+                      //                   return const CircularProgressIndicator(); // Hiển thị tiến trình chờ
+                      //                 } else if (snapshot.hasError) {
+                      //                   return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
+                      //                 } else {
+                      //                   List<String?> listgenre = genreList;
+                      //                   return Wrap(
+                      //                     spacing: 10,
+                      //                     runSpacing: 10,
+                      //                     children: [
+                      //                       for (var genrename in listgenre)
+                      //                         listGenre(genrename,this.context),
+                      //                     ],
+                      //                   );
+                      //                 }
+                      //               }),
+                      //         ),
+                      //       ],),
+                      //   ),
+                      // )
+                    ],
                   ),
                 ),
               ),
             ],
-          ),
+          )
         );
       },
     );
   }
-  Widget listGenreCate(String? genre, BuildContext context){
+  Widget listGenreCate(Genre genre, BuildContext context){
     return Consumer<UiProvider>(
         builder: (context, UiProvider notifier, child) {
-          return Container(
-            margin: EdgeInsets.only(left: 5, right: 5),
-            width: 120,
-            height: 43,
-            padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              color: notifier.isDark ? Colors.black : Colors.redAccent, // Đặt màu nền
-              border: Border.all(color: Colors.white),
-              borderRadius: BorderRadius.circular(5.0),
+          return InkWell(
+            onTap: (){
+              if(selectedIndex!=genre.genreId){
+                setState(() {
+                  selectedIndex = genre.genreId!;
+                });
+              }
+              else{
+                setState(() {
+                  selectedIndex = -1;
+                });
+              }
+            },
+            child: Container(
+              margin: EdgeInsets.only(left: 5, right: 5),
+              width: 120,
+              height: 43,
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                color: notifier.isDark ? Colors.black : Colors.redAccent, // Đặt màu nền
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child:
+              (!translating)?Text(genre.genreName!, textAlign: TextAlign.center,
+                  style: TextStyle(color: notifier.isDark ? Colors.white : Colors.white, overflow: TextOverflow.ellipsis)): Text("Loading"),
             ),
-            child:
-            (!translating)?Text(genre!, textAlign: TextAlign.center,
-                style: TextStyle(color: notifier.isDark ? Colors.white : Colors.white, overflow: TextOverflow.ellipsis)): Text("Loading"),
           );
         });
   }

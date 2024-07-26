@@ -211,9 +211,7 @@ namespace netlexapiwebadmin.Models
 
                 entity.ToTable("MovieGenre");
 
-                entity.Property(e => e.Mgenreid)
-                    .ValueGeneratedNever()
-                    .HasColumnName("mgenreid");
+                entity.Property(e => e.Mgenreid).HasColumnName("mgenreid");
 
                 entity.Property(e => e.GenreId).HasColumnName("genre_id");
 
@@ -222,13 +220,11 @@ namespace netlexapiwebadmin.Models
                 entity.HasOne(d => d.Genre)
                     .WithMany(p => p.MovieGenres)
                     .HasForeignKey(d => d.GenreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__MovieGenr__genre__2BFE89A6");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.MovieGenres)
                     .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__MovieGenr__movie__2B0A656D");
             });
 

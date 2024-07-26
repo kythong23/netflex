@@ -90,21 +90,7 @@ namespace netflexapi.Controllers
               return Problem("Entity set 'netflexContext.MovieGenres'  is null.");
           }
             _context.MovieGenres.Add(movieGenre);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (MovieGenreExists(movieGenre.Mgenreid))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMovieGenre", new { id = movieGenre.Mgenreid }, movieGenre);
         }
