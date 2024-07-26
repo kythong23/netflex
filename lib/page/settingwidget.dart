@@ -301,7 +301,7 @@ class _StateSettingWidget extends State<SettingWidget>{
     });
   }
   Future Loggout() async{
-    await GoogleSignInApi.logout;
+    //await GoogleSignInApi.logout;
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.remove('user');
     Provider.of<FavorProvider>(context,listen: false).clearAll();

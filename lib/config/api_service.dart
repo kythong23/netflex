@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:http/http.dart' as http;
+import 'package:netflex/data/Subcription.dart';
 import 'package:netflex/data/episode.dart';
 import 'package:netflex/data/favormovie.dart';
 import 'package:netflex/data/moviegenres.dart';
@@ -11,6 +13,7 @@ import 'package:netflex/provider/provider.dart';
 import 'package:provider/provider.dart';
 import '../api/google_signin_api.dart';
 import '../data/genres.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<Movies>> fetchMovies() async {
   final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Movies'));
@@ -68,6 +71,33 @@ Future<List<Episode>> fetchEpisodesByMovieId(int id) async {
   return filteredEpisodes;
 }
 
+Future<Subcription> fetchSubcriptionById(int id) async {
+  List<Subcription> allSubcriptions = await fetchSubcriptions();
+  Subcription subcriptionById = allSubcriptions.firstWhere((element) => element.subId == id);
+  return subcriptionById;
+}
+
+Future<bool> setSubcriptionForUser(int id) async{
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  User user = User.fromJson(jsonDecode(pref.getString('user')!));
+  user.subcriptionId = id;
+  user.role = 'registered';
+  int i = user.userId!;
+
+  final response = await http.put(
+    Uri.parse('http://10.0.2.2:5042/api/Users/$i'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(user.toJson()),
+  );
+  if (response.statusCode == 204) {
+    return true;
+  } else {
+    throw Exception((response));
+  }
+}
+
 Future<bool> checkEmail(String email) async {
   final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Users/exists/$email'));
 
@@ -107,6 +137,16 @@ Future<bool> checkUser(UserSignIn user) async {
     return true;
   } else {
     return false;
+  }
+}
+Future<List<Subcription>> fetchSubcriptions() async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Subcriptions'));
+
+  if (response.statusCode == 200) {
+    List<dynamic> data = json.decode(response.body);
+    return data.map((json) => Subcription.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load Movie');
   }
 }
 Future<bool> addFavor(FavorMovies favorMovies) async{

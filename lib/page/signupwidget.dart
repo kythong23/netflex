@@ -13,6 +13,7 @@ import '../api/google_signin_api.dart';
 import '../data/user.dart';
 import '../data/user_signin.dart';
 import '../config/api_service.dart';
+import './subcription.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -39,9 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if(strUser != null){
       User user = User.fromJson(jsonDecode(pref.getString('user')!));
       updateFavorProvider(user);
-      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MyHome()));
+      if(user.role != 'normal'){
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyHome()));
+      }
     }
   }
 
@@ -287,9 +290,17 @@ class _LoginScreenState extends State<LoginScreen> {
     if(user != null){
       saveUser(user);
       updateFavorProvider(user);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MyHome()));
+      if(user.role == 'normal'){
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SubscriptionPage()));
+      }else{
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyHome()));
+      }
+
+
     }else{
       ShowDialog('Something wrong',context);
     }

@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^2.0.10+1
+  flutter_svg:
   cached_network_image: ^3.3.1
 
 
@@ -38,10 +38,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   sqflite: ^2.3.3+1
-  lottie: ^3.1.2
+  lottie:
   chewie: ^1.8.1
   video_player: ^2.8.6
-  youtube_player_flutter: ^9.0.1
+  youtube_player_flutter:
   font_awesome_flutter: ^10.7.0
   flutter_hooks: any
   http: any
@@ -53,10 +53,11 @@ dependencies:
   google_sign_in: 6.2.1
   flutter_local_notifications: ^17.2.1+1
   flutter_translate: ^4.1.0
-  translator: ^1.0.0
+  translator:
   expandable_section: ^0.0.3
   country_flags: ^3.0.0
   awesome_dialog: ^3.2.1
+  flutter_paypal_checkout:
 
 dev_dependencies:
   flutter_test:
