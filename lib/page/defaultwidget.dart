@@ -42,8 +42,9 @@ class _DefautlWidgetState extends State<DefautlWidget> {
     return getFilm;
   }
   Future transGenre()async{
-    List<Genre> _espisode= await fetchGenres();
-    for(var e in _espisode){
+    List<Genre> genre= await fetchGenres();
+    for(int i = 0; i <=2; i++){
+      Genre e = genre[i];
       _afterTrans.add(await translate(e.genreName!, context));
     }
   }
@@ -62,6 +63,7 @@ class _DefautlWidgetState extends State<DefautlWidget> {
       builder: (context, UiProvider notifier, child) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Row(
               children: [
                 Padding(
@@ -93,66 +95,33 @@ class _DefautlWidgetState extends State<DefautlWidget> {
                   child: Stack(
                     children: [
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
+                        children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                  child: InkWell(
-                                    onTap: (){
-                                      setState(() {
-                                        visible = !visible;
-                                      });
-                                    },
-                                    child: Container(
-                                      height: 43,
-                                      padding: const EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
-                                        border: Border.all(color: Colors.black),
-                                        borderRadius: BorderRadius.circular(5.0),
-                                      ),
-                                      child:
-                                      (!translating)?Text(_genre!, textAlign: TextAlign.center,
-                                          style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,)): Text("Loading"),
-                                    ),
-                                  ),
-                                ),
-                              SizedBox(width: 10), // Khoảng cách giữa các container
-                              Expanded(
-                                child: Container(
-                                  height: 43,
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child:
-                                  (!translating)?Text(_movies!, textAlign: TextAlign.center,
-                                      style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,)): Text("Loading"),
-                                ),
-                              ),
-                              SizedBox(width: 10), // Khoảng cách giữa các container
-                              Expanded(
-                                child: Container(
-                                  height: 43,
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: notifier.isDark ? Colors.white : Colors.black, // Đặt màu nền
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: (!translating)?Text(_tvShows!, textAlign: TextAlign.center,
-                                      style: TextStyle(color: notifier.isDark ? Colors.black : Colors.white,
-                                      overflow: TextOverflow.ellipsis)): Text("Loading"),
-                                ),
-                              ),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FutureBuilder(
+                                  future: fetchGenres(),
+                                  builder: (context,snapshot){
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
+                                      return const CircularProgressIndicator(); // Hiển thị tiến trình chờ
+                                    } else if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
+                                    } else {
+                                      List<String?> listgenre = _afterTrans;
+                                      return Wrap(
+                                        spacing: 10,
+                                        runSpacing: 10,
+                                        children: [
+                                          for (var genrename in listgenre)
+                                            listGenreCate(genrename,this.context),
+                                        ],
+                                      );
+                                    }
+                                  }),
                             ],
                           ),
                           slideposter(context),
-                           Row(
+                          Row(
                             children: [
                               (!translating)?Text(_trending!, textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -209,5 +178,24 @@ class _DefautlWidgetState extends State<DefautlWidget> {
         );
       },
     );
+  }
+  Widget listGenreCate(String? genre, BuildContext context){
+    return Consumer<UiProvider>(
+        builder: (context, UiProvider notifier, child) {
+          return Container(
+            margin: EdgeInsets.only(left: 5, right: 5),
+            width: 120,
+            height: 43,
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: notifier.isDark ? Colors.black : Colors.redAccent, // Đặt màu nền
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            child:
+            (!translating)?Text(genre!, textAlign: TextAlign.center,
+                style: TextStyle(color: notifier.isDark ? Colors.white : Colors.white, overflow: TextOverflow.ellipsis)): Text("Loading"),
+          );
+        });
   }
 }
