@@ -9,7 +9,6 @@ namespace netflexapi.Models
         {
             FavorMovies = new HashSet<FavorMovie>();
             News = new HashSet<News>();
-            Subcriptions = new HashSet<Subcription>();
         }
 
         public int UserId { get; set; }
@@ -18,9 +17,11 @@ namespace netflexapi.Models
         public string? Email { get; set; }
         public string? Role { get; set; }
         public string? Status { get; set; }
+        public int? SubcriptionId { get; set; }
+        public DateTime? ExpiredDate { get; set; }
 
+        public virtual Subcription? Subcription { get; set; }
         public virtual ICollection<FavorMovie> FavorMovies { get; set; }
         public virtual ICollection<News> News { get; set; }
-        public virtual ICollection<Subcription> Subcriptions { get; set; }
     }
 }

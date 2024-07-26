@@ -117,14 +117,87 @@ Widget listGenre (String? name,BuildContext context){
   return Container(
     padding: EdgeInsets.all(8),
     decoration: BoxDecoration(
-      border: Border.all(color: Colors.white),
-      borderRadius: BorderRadius.circular(16)
+        border: Border.all(color: Colors.white),
+        borderRadius: BorderRadius.circular(16)
     ),
     child: Text(name!,
-    style: TextStyle(
-      color: Colors.white
-    ),),
+      style: TextStyle(
+          color: Colors.white
+      ),),
   );
+}
+class ListMovieByGenre extends StatefulWidget {
+  final int? movieId;
+  const ListMovieByGenre({super.key,required this.movieId});
+
+  @override
+  State<ListMovieByGenre> createState() => _ListMovieByGenreState();
+}
+
+class _ListMovieByGenreState extends State<ListMovieByGenre> {
+  bool isCheck=false;
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: fetchMoviesById(widget.movieId!),
+        builder: (context,snapshot){
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(); // Hiển thị tiến trình chờ
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}'); // Hiển thị thông báo lỗi nếu có lỗi
+          } else {
+            Movies m = snapshot.data!;
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.network(m.img!,height: 180,width: 120,fit: BoxFit.cover,),
+                  Container(
+                    margin: EdgeInsets.only(left: 10),
+                    constraints: BoxConstraints(
+                      maxWidth: 230,
+                      maxHeight: 180,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(m.title!,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),),
+                        SizedBox(height: 10,),
+                        Text(
+                          m.description!,
+                          style: const TextStyle(
+                            // color: Colors.white,
+                            fontSize: 16,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            ElevatedButton(onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailWidget(movies: m)));
+                            },
+                              child: Text('Watch Now'),
+                            ),
+                            Spacer(),
+                            Icon(Icons.favorite),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }});
+
+  }
 }
 class ListFavor extends StatefulWidget {
   final int index;
@@ -134,10 +207,10 @@ class ListFavor extends StatefulWidget {
   const ListFavor({super.key,required this.m,required this.value,required this.index,required this.favorMovies});
 
   @override
-  State<ListFavor> createState() => _ListFavorState();
+  State<ListFavor> createState() => _ListFavor();
 }
 
-class _ListFavorState extends State<ListFavor> {
+class _ListFavor extends State<ListFavor> {
   bool isCheck=false;
   @override
   Widget build(BuildContext context) {

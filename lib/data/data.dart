@@ -16,6 +16,17 @@ getFlim(int amount){
   }
   return film;
 }
+getFlim1(int amount){
+  List<Movies> film = [];
+  for(int i = 4 ; i<=amount; i++){
+    film.add(Movies(
+        title: "phim""$i",
+        img: "${url_img}poster$i.jpg"
+    )
+    );
+  }
+  return film;
+}
 Future<List<Map<String, dynamic>>> queryAllMovies(Database database) async {
   return await database.query('movies');
 }

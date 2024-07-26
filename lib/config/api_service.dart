@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:netflex/data/episode.dart';
 import 'package:netflex/data/favormovie.dart';
+import 'package:netflex/data/moviegenres.dart';
 import 'package:netflex/data/movies.dart';
 import 'package:netflex/data/user.dart';
 import 'package:netflex/data/user_signin.dart';
@@ -25,6 +26,21 @@ Future<Movies> fetchMoviesById(int id) async {
   List<Movies> allMovies = await fetchMovies();
   Movies moviesById = allMovies.firstWhere((element) => element.id == id);
   return moviesById;
+}
+Future<List<MovieGenres>> fetchMovieGenres() async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/MovieGenres'));
+
+  if (response.statusCode == 200) {
+    List<dynamic> data = json.decode(response.body);
+    return data.map((json) => MovieGenres.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load MovieGenres');
+  }
+}
+Future<List<MovieGenres>> fetchMoviesByGenre(int id) async {
+  List<MovieGenres> allGenre = await fetchMovieGenres();
+  List<MovieGenres> movieByGenre = allGenre.where((e) => e.genreId == id).toList();
+  return movieByGenre;
 }
 Future<List<Genre>> fetchGenres() async {
   final response = await http.get(Uri.parse('http://10.0.2.2:5042/api/Genres'));

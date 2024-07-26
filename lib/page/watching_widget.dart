@@ -39,7 +39,7 @@ class _WatchingWidgetState extends State<WatchingWidget> {
               videoPlayerController: _videoPlayerController,
               autoPlay: true,
               looping: false,
-              fullScreenByDefault: false,
+              fullScreenByDefault: true,
             );
             _isInitialized = true;
           });

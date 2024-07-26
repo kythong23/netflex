@@ -21,9 +21,8 @@ namespace netlexapiwebadmin.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-              return _context.Users != null ? 
-                          View(await _context.Users.ToListAsync()) :
-                          Problem("Entity set 'netflexContext.Users'  is null.");
+            var netflexContext = _context.Users.Include(u => u.Subcription);
+            return View(await netflexContext.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -35,6 +34,7 @@ namespace netlexapiwebadmin.Controllers
             }
 
             var user = await _context.Users
+                .Include(u => u.Subcription)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
@@ -47,6 +47,7 @@ namespace netlexapiwebadmin.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewData["SubcriptionId"] = new SelectList(_context.Subcriptions, "SubId", "SubId");
             return View();
         }
 
@@ -55,7 +56,7 @@ namespace netlexapiwebadmin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Username,Password,Email,Role,Status")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,Username,Password,Email,Role,Status,SubcriptionId,ExpiredDate")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +64,7 @@ namespace netlexapiwebadmin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SubcriptionId"] = new SelectList(_context.Subcriptions, "SubId", "SubId", user.SubcriptionId);
             return View(user);
         }
 
@@ -79,6 +81,7 @@ namespace netlexapiwebadmin.Controllers
             {
                 return NotFound();
             }
+            ViewData["SubcriptionId"] = new SelectList(_context.Subcriptions, "SubId", "SubId", user.SubcriptionId);
             return View(user);
         }
 
@@ -87,7 +90,7 @@ namespace netlexapiwebadmin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,Username,Password,Email,Role,Status")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,Username,Password,Email,Role,Status,SubcriptionId,ExpiredDate")] User user)
         {
             if (id != user.UserId)
             {
@@ -114,6 +117,7 @@ namespace netlexapiwebadmin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["SubcriptionId"] = new SelectList(_context.Subcriptions, "SubId", "SubId", user.SubcriptionId);
             return View(user);
         }
 
@@ -126,6 +130,7 @@ namespace netlexapiwebadmin.Controllers
             }
 
             var user = await _context.Users
+                .Include(u => u.Subcription)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {

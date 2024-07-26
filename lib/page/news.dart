@@ -41,6 +41,7 @@ class _NewWidgetState extends State<NewWidget>{
               child: SafeArea(
                 child: Scaffold(
                     appBar: AppBar(
+                      automaticallyImplyLeading: false,
                       elevation: 0,
                       title:
                       (!translating)?Text(appbartitle!, style: TextStyle(
