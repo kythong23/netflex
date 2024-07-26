@@ -9,157 +9,177 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = netlexapiwebadmin
 build_property.RootNamespace = netlexapiwebadmin
-build_property.ProjectDir = C:\Users\acer\Desktop\netflex_clone\netflex\netlexapiwebadmin\netlexapiwebadmin\
+build_property.ProjectDir = C:\Users\acer\Desktop\netflex\netlexapiwebadmin\netlexapiwebadmin\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\acer\Desktop\netflex_clone\netflex\netlexapiwebadmin\netlexapiwebadmin
+build_property.MSBuildProjectDirectory = C:\Users\acer\Desktop\netflex\netlexapiwebadmin\netlexapiwebadmin
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Create.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Delete.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Details.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Edit.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Index.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Episodes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Create.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmF2b3JNb3ZpZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Delete.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmF2b3JNb3ZpZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Details.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmF2b3JNb3ZpZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Edit.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmF2b3JNb3ZpZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Index.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/FavorMovies/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmF2b3JNb3ZpZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Create.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VucmVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Delete.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VucmVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Details.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VucmVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Edit.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VucmVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Index.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Genres/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VucmVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Home/Index.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Home/Privacy.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Create.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVHZW5yZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Delete.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVHZW5yZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Details.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVHZW5yZXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Edit.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVHZW5yZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Index.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/MovieGenres/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVHZW5yZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Create.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Delete.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Details.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Edit.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Index.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Movies/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Shared/Error.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Create.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Subcriptions/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViY3JpcHRpb25zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Subcriptions/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViY3JpcHRpb25zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Subcriptions/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViY3JpcHRpb25zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Subcriptions/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViY3JpcHRpb25zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Subcriptions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3ViY3JpcHRpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Delete.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Details.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Edit.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Index.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/_ViewImports.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/_ViewStart.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/acer/Desktop/netflex_clone/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Shared/_Layout.cshtml]
+[C:/Users/acer/Desktop/netflex/netlexapiwebadmin/netlexapiwebadmin/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-tneguuzvu6

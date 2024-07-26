@@ -59,6 +59,7 @@ class _MyProfileState extends State<MyProfile> {
           return  Scaffold(
             // backgroundColor: const Color.fromARGB(26, 26, 26, 100),
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               title: (!translating)?Text(appbartitle!, style: TextStyle(fontWeight: FontWeight.bold)): Text("Loading"),
               // backgroundColor: Colors.black,
               actions: [

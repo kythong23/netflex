@@ -16,7 +16,7 @@ alter table Episode add foreign key (movie_id) references Movie(id)
 alter table FavorMovie add foreign key (MovieID) references Movie(id)
 alter table FavorMovie add foreign key (UserID) references Users(user_id)
 
-alter table Subcription add foreign key (userid) references Users(user_id)
+alter table Users add foreign key (subcriptionID) references Subcription(SubID)
 
 alter table News add foreign key (movieid) references Movie(id)
 alter table News add foreign key (userid) references Users(user_id)

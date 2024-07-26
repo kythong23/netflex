@@ -211,9 +211,7 @@ namespace netflexapi.Models
 
                 entity.ToTable("MovieGenre");
 
-                entity.Property(e => e.Mgenreid)
-                    .ValueGeneratedNever()
-                    .HasColumnName("mgenreid");
+                entity.Property(e => e.Mgenreid).HasColumnName("mgenreid");
 
                 entity.Property(e => e.GenreId).HasColumnName("genre_id");
 
@@ -222,13 +220,11 @@ namespace netflexapi.Models
                 entity.HasOne(d => d.Genre)
                     .WithMany(p => p.MovieGenres)
                     .HasForeignKey(d => d.GenreId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__MovieGenr__genre__2BFE89A6");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.MovieGenres)
                     .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__MovieGenr__movie__2B0A656D");
             });
 
@@ -272,13 +268,6 @@ namespace netflexapi.Models
                     .HasColumnName("SubID");
 
                 entity.Property(e => e.SubName).HasMaxLength(100);
-
-                entity.Property(e => e.Userid).HasColumnName("userid");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Subcriptions)
-                    .HasForeignKey(d => d.Userid)
-                    .HasConstraintName("FK__Subcripti__useri__19DFD96B");
             });
 
             modelBuilder.Entity<Subtitle>(entity =>
@@ -330,6 +319,10 @@ namespace netflexapi.Models
                     .HasMaxLength(50)
                     .HasColumnName("email");
 
+                entity.Property(e => e.ExpiredDate)
+                    .HasColumnType("date")
+                    .HasColumnName("expired_date");
+
                 entity.Property(e => e.Password)
                     .HasMaxLength(50)
                     .HasColumnName("password");
@@ -342,9 +335,16 @@ namespace netflexapi.Models
                     .HasMaxLength(50)
                     .HasColumnName("status");
 
+                entity.Property(e => e.SubcriptionId).HasColumnName("subcriptionID");
+
                 entity.Property(e => e.Username)
                     .HasMaxLength(50)
                     .HasColumnName("username");
+
+                entity.HasOne(d => d.Subcription)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.SubcriptionId)
+                    .HasConstraintName("FK__Users__subcripti__55F4C372");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("netflexapi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8849b12f8068893528d4a41b36dd49d913bb5e30")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("netflexapi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("netflexapi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
